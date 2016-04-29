@@ -3,57 +3,122 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>my-todays-all</title>
+
+		<!-- polymer -->
+		<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+
+		<!-- polymer: elements -->
+		<link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html" />
+		<link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html" />
+		<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html" />
+		<link rel="import" href="bower_components/paper-tabs/paper-tabs.html" />
+		<link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html" />
+
+		<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html" />
+		<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html" />
+		<link rel="import" href="bower_components/iron-icons/iron-icons.html" />
+		<style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+
+		<!-- bootstrap -->
 		<link rel="stylesheet" href="./common/libs/bootstrap/dist/css/bootstrap.css" />
-		<!-- <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css' /> -->
-		<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css' />
+
+		<!-- project resources -->
 		<link rel="stylesheet" href="./common/styles/main.css" />
+
+		<!-- polymer: project own elements -->
+		<link rel="import" href="common/elements/proto-element/proto-element.html" />
+
 	</head>
-	<body>
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-12">
-					<h1>my-todays-all</h1>
-					<form action="javascript:;" class="form-horizontal" method="get" onsubmit="main.executeDiffdir(this); return false;">
-						<div class="form-group">
-							<label class="col-xs-2 control-label" for="inputBefore">before:</label>
-							<div class="col-xs-10">
-								<div class="input-group">
-									<input type="text" name="before" id="inputBefore" class="form-control" />
-									<span class="input-group-btn">
-										<button type="button" class="btn btn-default select-local-directory" data-for="[name=before]">select</button>
-									</span>
-								</div><!-- /input-group -->
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-xs-2 control-label" for="inputAfter">after:</label>
-							<div class="col-xs-10">
-								<div class="input-group">
-									<input type="text" name="after" id="inputAfter" class="form-control" />
-									<span class="input-group-btn">
-										<button type="button" class="btn btn-default select-local-directory" data-for="[name=after]">select</button>
-									</span>
-								</div><!-- /input-group -->
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-xs-2 control-label" for="inputOutput">output:</label>
-							<div class="col-xs-10">
-								<div class="input-group">
-									<input type="text" name="output" id="inputOutput" class="form-control" />
-									<span class="input-group-btn">
-										<button type="button" class="btn btn-default select-local-directory" data-for="[name=output]">select</button>
-									</span>
-								</div><!-- /input-group -->
-							</div>
-						</div>
-						<div><label><input type="checkbox" name="strip-crlf" value="1" checked="checked" /> 改行コードの違いを無視</label></div>
-						<p><button type="submit" class="btn btn-primary btn-block btn-lg">差分を抽出する</button></p>
-					</form>
+	<body class="fullbleed vertical layout">
+		<paper-drawer-panel class="flex" responsive-width="20000px">
+
+			<paper-header-panel main>
+				<paper-toolbar>
+					<paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+					<span class="flex"></span>
+					<div>my-todays-all</div>
+					<span class="flex"></span>
+				</paper-toolbar>
+				<div class="paper-header">
+					<h1>Dashboard</h1>
+					<paper-tabs class="bottom fit" selected="0">
+						<paper-tab>List</paper-tab>
+						<paper-tab>Calender</paper-tab>
+						<paper-tab>Guntchart</paper-tab>
+					</paper-tabs>
 				</div>
-			</div>
-		</div>
+
+				<div>
+					<div class="horizontal layout demo">
+						<div class="flex-4">Alpha</div>
+						<div class="flex">Beta</div>
+						<div class="flex-4">Gamma</div>
+					</div>
+					<div class="horizontal around-justified layout">
+						<div>around-justified</div>
+						<div>around-justified</div>
+					</div>
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-xs-12">
+								<form action="javascript:;" class="form-horizontal" method="get" onsubmit="main.executeDiffdir(this); return false;">
+									<div class="form-group">
+										<label class="col-xs-2 control-label" for="inputBefore">before:</label>
+										<div class="col-xs-10">
+											<div class="input-group">
+												<input type="text" name="before" id="inputBefore" class="form-control" />
+												<span class="input-group-btn">
+													<button type="button" class="btn btn-default select-local-directory" data-for="[name=before]">select</button>
+												</span>
+											</div><!-- /input-group -->
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-xs-2 control-label" for="inputAfter">after:</label>
+										<div class="col-xs-10">
+											<div class="input-group">
+												<input type="text" name="after" id="inputAfter" class="form-control" />
+												<span class="input-group-btn">
+													<button type="button" class="btn btn-default select-local-directory" data-for="[name=after]">select</button>
+												</span>
+											</div><!-- /input-group -->
+										</div>
+									</div>
+									<proto-element></proto-element>
+									<div class="form-group">
+										<label class="col-xs-2 control-label" for="inputOutput">output:</label>
+										<div class="col-xs-10">
+											<div class="input-group">
+												<input type="text" name="output" id="inputOutput" class="form-control" />
+												<span class="input-group-btn">
+													<button type="button" class="btn btn-default select-local-directory" data-for="[name=output]">select</button>
+												</span>
+											</div><!-- /input-group -->
+										</div>
+									</div>
+									<div><label><input type="checkbox" name="strip-crlf" value="1" checked="checked" /> 改行コードの違いを無視</label></div>
+									<p><button type="submit" class="btn btn-primary btn-block btn-lg">差分を抽出する</button></p>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</paper-header-panel>
+
+			<paper-header-panel drawer>
+				<div class="paper-header">
+					<h2>menu</h2>
+				</div>
+				<div>
+				</div>
+			</paper-header-panel>
+		</paper-drawer-panel>
+
+
+		<!-- project resources -->
 		<script src="./common/scripts/main.js"></script>
+
+		<!-- bootstrap -->
 		<script src="./common/libs/bootstrap/dist/js/bootstrap.js"></script>
 	</body>
 </html>

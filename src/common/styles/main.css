@@ -3,8 +3,6 @@ html, body{
     height: 100%;
     background: linear-gradient(#b1ffe8, #81e6ff);
 	cursor: default;
-    /*font-family: 'Poiret One', cursive;*/
-    font-family: 'Lobster', cursive;
 }
 body{
 	/* http://www.softel.co.jp/blogs/tech/archives/2909 */
