@@ -1,0 +1,44 @@
+{
+  "name": "my-todays-all",
+  "version": "0.1.0",
+  "description": "Listing your todays all issues.",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "build": "node build.js;",
+    "start": "electron .",
+    "test": "mocha --ui tdd ./tests/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomk79/my-todays-all.git"
+  },
+  "author": "Tomoya Koyanagi <tomk79@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tomk79/my-todays-all/issues"
+  },
+  "homepage": "https://github.com/tomk79/my-todays-all#readme",
+  "dependencies": {
+    "electron": "^0.4.1",
+    "electron-debug": "^0.5.1",
+    "jquery": "^2.2.1",
+    "node-php-bin": "^0.1.6",
+    "rimraf": "^2.5.2",
+    "zip-folder": "^1.0.0"
+  },
+  "devDependencies": {
+    "bootstrap": "^3.3.6",
+    "electron-packager": "^5.2.1",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-browserify": "^0.5.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.2.0",
+    "gulp-twig": "^0.5.0",
+    "gulp-uglify": "^1.5.3",
+    "mocha": "^2.1.0"
+  }
+}

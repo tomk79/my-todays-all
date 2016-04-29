@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>my-todays-all</title>
+		<link rel="stylesheet" href="./common/libs/bootstrap/dist/css/bootstrap.css" />
+		<!-- <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css' /> -->
+		<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css' />
+		<link rel="stylesheet" href="./common/styles/main.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<h1>my-todays-all</h1>
+					<form action="javascript:;" class="form-horizontal" method="get" onsubmit="main.executeDiffdir(this); return false;">
+						<div class="form-group">
+							<label class="col-xs-2 control-label" for="inputBefore">before:</label>
+							<div class="col-xs-10">
+								<div class="input-group">
+									<input type="text" name="before" id="inputBefore" class="form-control" />
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default select-local-directory" data-for="[name=before]">select</button>
+									</span>
+								</div><!-- /input-group -->
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 control-label" for="inputAfter">after:</label>
+							<div class="col-xs-10">
+								<div class="input-group">
+									<input type="text" name="after" id="inputAfter" class="form-control" />
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default select-local-directory" data-for="[name=after]">select</button>
+									</span>
+								</div><!-- /input-group -->
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 control-label" for="inputOutput">output:</label>
+							<div class="col-xs-10">
+								<div class="input-group">
+									<input type="text" name="output" id="inputOutput" class="form-control" />
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default select-local-directory" data-for="[name=output]">select</button>
+									</span>
+								</div><!-- /input-group -->
+							</div>
+						</div>
+						<div><label><input type="checkbox" name="strip-crlf" value="1" checked="checked" /> 改行コードの違いを無視</label></div>
+						<p><button type="submit" class="btn btn-primary btn-block btn-lg">差分を抽出する</button></p>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script src="./common/scripts/main.js"></script>
+		<script src="./common/libs/bootstrap/dist/js/bootstrap.js"></script>
+	</body>
+</html>
