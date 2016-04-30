@@ -42,65 +42,30 @@
 				<div class="paper-header">
 					<h1>Dashboard</h1>
 					<paper-tabs class="bottom fit" selected="0">
-						<paper-tab>List</paper-tab>
-						<paper-tab>Calender</paper-tab>
-						<paper-tab>Guntchart</paper-tab>
+						<paper-tab data-tab-name="list">List</paper-tab>
+						<paper-tab data-tab-name="calendar">Calendar</paper-tab>
+						<paper-tab data-tab-name="ganttchart">Gantt chart</paper-tab>
 					</paper-tabs>
 				</div>
 
 				<div>
-					<div class="horizontal layout demo">
-						<div class="flex-4">Alpha</div>
-						<div class="flex">Beta</div>
-						<div class="flex-4">Gamma</div>
-					</div>
-					<div class="horizontal around-justified layout">
-						<div>around-justified</div>
-						<div>around-justified</div>
-					</div>
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col-xs-12">
-								<form action="javascript:;" class="form-horizontal" method="get" onsubmit="main.executeDiffdir(this); return false;">
-									<div class="form-group">
-										<label class="col-xs-2 control-label" for="inputBefore">before:</label>
-										<div class="col-xs-10">
-											<div class="input-group">
-												<input type="text" name="before" id="inputBefore" class="form-control" />
-												<span class="input-group-btn">
-													<button type="button" class="btn btn-default select-local-directory" data-for="[name=before]">select</button>
-												</span>
-											</div><!-- /input-group -->
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-xs-2 control-label" for="inputAfter">after:</label>
-										<div class="col-xs-10">
-											<div class="input-group">
-												<input type="text" name="after" id="inputAfter" class="form-control" />
-												<span class="input-group-btn">
-													<button type="button" class="btn btn-default select-local-directory" data-for="[name=after]">select</button>
-												</span>
-											</div><!-- /input-group -->
-										</div>
-									</div>
-									<proto-element></proto-element>
-									<div class="form-group">
-										<label class="col-xs-2 control-label" for="inputOutput">output:</label>
-										<div class="col-xs-10">
-											<div class="input-group">
-												<input type="text" name="output" id="inputOutput" class="form-control" />
-												<span class="input-group-btn">
-													<button type="button" class="btn btn-default select-local-directory" data-for="[name=output]">select</button>
-												</span>
-											</div><!-- /input-group -->
-										</div>
-									</div>
-									<div><label><input type="checkbox" name="strip-crlf" value="1" checked="checked" /> 改行コードの違いを無視</label></div>
-									<p><button type="submit" class="btn btn-primary btn-block btn-lg">差分を抽出する</button></p>
-								</form>
-							</div>
+					<div data-tab-content="list">
+						<p>LIST</p>
+						<div class="horizontal layout demo">
+							<div class="flex-4">Alpha</div>
+							<div class="flex">Beta</div>
+							<div class="flex-4">Gamma</div>
 						</div>
+					</div>
+					<div data-tab-content="calendar" style="display:none;">
+						<p>Calendar</p>
+						<div class="horizontal around-justified layout">
+							<div>around-justified</div>
+							<div>around-justified</div>
+						</div>
+					</div>
+					<div data-tab-content="ganttchart" style="display:none;">
+						<p>Gantt chart</p>
 					</div>
 				</div>
 			</paper-header-panel>
@@ -110,15 +75,16 @@
 					<h2>menu</h2>
 				</div>
 				<div>
+					<p>no contents</p>
 				</div>
 			</paper-header-panel>
 		</paper-drawer-panel>
 
+		<!-- bootstrap -->
+		<script src="./common/libs/bootstrap/dist/js/bootstrap.js"></script>
 
 		<!-- project resources -->
 		<script src="./common/scripts/main.js"></script>
 
-		<!-- bootstrap -->
-		<script src="./common/libs/bootstrap/dist/js/bootstrap.js"></script>
 	</body>
 </html>
