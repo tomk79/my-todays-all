@@ -121,7 +121,7 @@ var installMenu = function () {
 // initialization and is ready to create browser windows.
 app.on('ready', function () {
 	// Create the browser window.
-	mainWindow = new BrowserWindow({ width: 440, height: 370 });
+	mainWindow = new BrowserWindow({ width: 600, height: 470 });
 	// and load the index.html of the app.
 	mainWindow.loadUrl('file://' + __dirname + '/dist/index.html');
 

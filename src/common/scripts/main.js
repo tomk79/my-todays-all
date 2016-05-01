@@ -6,6 +6,7 @@
 	// console.log(diffdir);
 
 	window.main = new (function(){
+		this.desktopUtils = remote.require('desktop-utils');
 	})();
 
 	$(window).load(function(){
