@@ -20,6 +20,17 @@
 				$('[data-tab-content='+$selected.attr('data-tab-name')+']').show();
 			})
 		;
+		$('iron-list').get(0).items = [
+			{
+				"name": "item1",
+				"longText": "long text."
+			} ,
+			{
+				"name": "item2",
+				"longText": "long text."
+			}
+		];
+		document.getElementById('settings').fitInto = $('body').get(0);
 
 	});
 
