@@ -4,6 +4,9 @@
 		<meta charset="UTF-8" />
 		<title>my-todays-all</title>
 
+		<!-- AngularJS -->
+		<script src="bower_components/angular/angular.min.js"></script>
+
 		<!-- polymer -->
 		<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
 
@@ -56,18 +59,6 @@
 						<h2>List</h2>
 						<p><code>iron-icons</code> に登録されている。一覧は <a href="https://elements.polymer-project.org/elements/iron-icons?view=demo:demo/index.html&active=iron-icons" onclick="main.desktopUtils.open(this.href);return false;">ここ</a>。</p>
 
-
-						<ul>
-							<iron-list as="item">
-								<template>
-									<li>
-										<b>#[[index]] - [[item.name]]</b>
-										<p>[[item.longText]]</p>
-									</li>
-								</template>
-							</iron-list>
-						</ul>
-
 					</div>
 					<div data-tab-content="calendar" style="display:none;">
 						<h2>Calendar</h2>
@@ -93,10 +84,24 @@
 			</paper-header-panel>
 		</paper-drawer-panel>
 
-		<paper-dialog id="settings" modal="true" fit-into="body" no-cancel-on-outside-click="false">
+		<paper-dialog id="settings" modal="true" no-cancel-on-outside-click="false">
 			<h2>Settings</h2>
 			<paper-dialog-scrollable>
-				Lorem ipsum...
+				<div ng-app>
+					<p><input type="text" ng-model="yourName"></p>
+					<p>Hello {{yourName}}!</p>
+				</div>
+				<ul>
+					<iron-list as="item">
+						<template>
+							<li>
+								<b>#[[index]] - [[item.name]]</b>
+								<p>[[item.longText]]</p>
+							</li>
+						</template>
+					</iron-list>
+				</ul>
+
 			</paper-dialog-scrollable>
 			<div class="buttons">
 				<paper-button dialog-dismiss>Cancel</paper-button>

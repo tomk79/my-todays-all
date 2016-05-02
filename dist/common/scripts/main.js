@@ -28,6 +28,18 @@
 			{
 				"name": "item2",
 				"longText": "long text."
+			} ,
+			{
+				"name": "item3",
+				"longText": "long text."
+			} ,
+			{
+				"name": "item4",
+				"longText": "long text."
+			} ,
+			{
+				"name": "item5",
+				"longText": "long text."
 			}
 		];
 		document.getElementById('settings').fitInto = $('body').get(0);
