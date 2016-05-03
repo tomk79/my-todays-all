@@ -17,9 +17,12 @@
 		<style is="custom-style" include="iron-flex iron-flex-alignment"></style>
 		<link rel="import" href="bower_components/iron-list/iron-list.html" />
 		<link rel="import" href="bower_components/paper-dialog/paper-dialog.html" />
+		<link rel="import" href="bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html" />
 		<link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html" />
 		<link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html" />
 		<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html" />
+		<link rel="import" href="bower_components/paper-listbox/paper-listbox.html" />
+		<link rel="import" href="bower_components/paper-item/paper-item.html" />
 		<link rel="import" href="bower_components/paper-tabs/paper-tabs.html" />
 		<link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html" />
 
@@ -43,7 +46,7 @@
 					<span class="flex"></span>
 					<div>my-todays-all</div>
 					<span class="flex"></span>
-					<paper-icon-button icon="settings" onclick="getElementById('settings').opened=true;"></paper-icon-button>
+					<paper-icon-button icon="settings" onclick="main.openSettings();"></paper-icon-button>
 				</paper-toolbar>
 				<div class="paper-header">
 					<h1>Dashboard</h1>
@@ -91,16 +94,16 @@
 					<p><input type="text" ng-model="yourName"></p>
 					<p>Hello {{yourName}}!</p>
 				</div>
-				<ul>
+				<paper-listbox>
 					<iron-list as="item">
 						<template>
-							<li>
+							<paper-item>
 								<b>#[[index]] - [[item.name]]</b>
 								<p>[[item.longText]]</p>
-							</li>
+							</paper-item>
 						</template>
 					</iron-list>
-				</ul>
+				</paper-listbox>
 
 			</paper-dialog-scrollable>
 			<div class="buttons">
