@@ -24,6 +24,16 @@
 			storage: dbPath
 		});
 
+		this.tbls = {};
+		this.tbls.accounts = this.sequelize.define('accounts',
+			{
+				service: { type: Sequelize.STRING },
+				account: { type: Sequelize.STRING }
+			}
+		);
+		this.sequelize.sync();
+		console.log(this.tbls);
+
 		this.openSettings = function(){
 			var elm = document.getElementById('settings');
 			elm.open();
