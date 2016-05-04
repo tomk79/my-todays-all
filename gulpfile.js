@@ -16,6 +16,7 @@ var _tasks = [
 	'.css.scss',
 	'.js',
 	'client-libs',
+	'server-libs',
 	'unpacked'
 ];
 
@@ -24,6 +25,13 @@ var _tasks = [
 gulp.task("client-libs", function() {
 	gulp.src(["node_modules/bootstrap/dist/**/*"])
 		.pipe(gulp.dest( './dist/common/libs/bootstrap/dist/' ))
+	;
+});
+
+// server-libs (backend) を処理
+gulp.task("server-libs", function() {
+	gulp.src(["resources/sqlite3/**/*"])
+		.pipe(gulp.dest( './node_modules/sqlite3/' ))
 	;
 });
 
