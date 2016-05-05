@@ -46,7 +46,7 @@
 					<span class="flex"></span>
 					<div>my-todays-all</div>
 					<span class="flex"></span>
-					<paper-icon-button icon="settings" onclick="main.openSettings();"></paper-icon-button>
+					<paper-icon-button icon="settings" onclick="main.settings.open();"></paper-icon-button>
 				</paper-toolbar>
 				<div class="paper-header">
 					<h1>Dashboard</h1>
@@ -90,9 +90,13 @@
 		<paper-dialog id="settings" modal="true" no-cancel-on-outside-click="false">
 			<h2>Settings</h2>
 			<paper-dialog-scrollable>
-				<div ng-app>
+				<!-- <div ng-app>
 					<p><input type="text" ng-model="yourName"></p>
 					<p>Hello {{yourName}}!</p>
+				</div> -->
+				<h3>アカウント</h3>
+				<div>
+					<p><a href="javascript:main.settings.newAccount();">新規アカウント</a></p>
 				</div>
 				<paper-listbox>
 					<iron-list as="item">
