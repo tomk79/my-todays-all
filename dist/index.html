@@ -93,13 +93,13 @@
 		</paper-drawer-panel>
 
 		<paper-dialog id="settings" modal="true" no-cancel-on-outside-click="false">
-			<h2>Settings</h2>
+			<h1>Settings</h1>
 			<paper-dialog-scrollable>
 				<!-- <div ng-app>
 					<p><input type="text" ng-model="yourName"></p>
 					<p>Hello {{yourName}}!</p>
 				</div> -->
-				<h3>アカウント</h3>
+				<h2>Accounts</h2>
 				<div>
 					<p><paper-button raised onclick="main.settings.editAccount();">新規アカウント</paper-button></p>
 				</div>
@@ -107,8 +107,9 @@
 					<iron-list as="item">
 						<template>
 							<paper-item>
-								<b>#[[index]] - [[item.account]]</b>
+								<b>#[[item.id]] - [[item.account]]</b>
 								<p>[[item.service]]</p>
+								<span data-account-id="[[item.id]]">[[item.id]]</span>
 							</paper-item>
 						</template>
 					</iron-list>
@@ -121,7 +122,7 @@
 		</paper-dialog>
 
 		<paper-dialog id="edit-account" modal="true" no-cancel-on-outside-click="false">
-			<h2>Edit Account</h2>
+			<h1>Edit Account</h1>
 			<paper-dialog-scrollable>
 				<paper-dropdown-menu label="Service" name="service" toggles="true">
 					<paper-listbox class="dropdown-content">
@@ -133,6 +134,7 @@
 				</paper-dropdown-menu>
 				<paper-input label="Account" type="text" name="account"></paper-input>
 				<paper-input label="Password" type="password" name="password"></paper-input>
+				<input type="hidden" name="account-id" value="" />
 			</paper-dialog-scrollable>
 			<div class="buttons">
 				<paper-button dialog-dismiss>Cancel</paper-button>

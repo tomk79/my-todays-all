@@ -21,3 +21,6 @@ textarea{
 #settings{
     width: 80%;
 }
+paper-dialog h1{
+    font-size: 16px;
+}

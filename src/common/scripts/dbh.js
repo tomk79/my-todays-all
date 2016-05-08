@@ -51,6 +51,27 @@ module.exports = function( main, callback ){
 	} // addAccount()
 
 	/**
+	 * アカウント情報を更新する
+	 */
+	this.updateAccount = function(accountId, service, account, authinfo, callback){
+		callback = callback || function(){};
+
+		this.tbls.accounts
+			.findOne({'where':{'id': accountId}})
+			.then(function(result) {
+				result.update({
+					'service': service,
+					'account': account,
+					'authinfo': JSON.stringify(authinfo)
+				});
+				// console.log(result);
+				callback(result);
+			})
+		;
+		return;
+	} // updateAccount()
+
+	/**
 	 * アカウント情報の一覧を取得する
 	 */
 	this.getAccountList = function(callback){
@@ -66,6 +87,21 @@ module.exports = function( main, callback ){
 		return;
 	} // getAccountList()
 
+	/**
+	 * アカウント情報を得る
+	 */
+	this.getAccount = function(accountId, callback){
+		// console.log('get account: '+accountId);
+		this.tbls.accounts
+			.findOne({'where':{'id': accountId}})
+			.then(function(result) {
+				result = JSON.parse(JSON.stringify(result));
+				// console.log(result);
+				callback(result);
+			})
+		;
+		return;
+	} // getAccount()
 
 	callback();
 	return;

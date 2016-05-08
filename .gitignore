@@ -36,3 +36,6 @@ unpacked/
 
 # build
 build/
+
+# db
+tests/data/db.sqlite
