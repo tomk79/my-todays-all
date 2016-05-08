@@ -32,10 +32,12 @@ module.exports = function(main){
 		var service = elmEditAccount.querySelector('paper-dropdown-menu[name=service]').selectedItem.attributes.value.value;
 		var account = elmEditAccount.querySelector('paper-input[name=account]').value;
 		var password = elmEditAccount.querySelector('paper-input[name=password]').value;
-		console.log(service, account, password);
-		setTimeout(function(){
+		// console.log(service, account, password);
+		main.dbh.addAccount(service, account, {"password": password}, function(hdl){
+			console.log(hdl.get());
 			elmSettings.open();
-		}, 10);
+		});
+		return;
 	});
 	// elmEditAccount.querySelector('paper-dropdown-menu').addEventListener('iron-select', function(e){
 	// 	// console.log('paper-dropdown-menu -> iron-select');
@@ -56,31 +58,13 @@ module.exports = function(main){
 	 */
 	this.open = function(){
 		elmSettings.open();
-		elmSettings.querySelector('iron-list').items = [
-			{
-				"name": "item1",
-				"longText": "long text."
-			} ,
-			{
-				"name": "item2",
-				"longText": "long text."
-			} ,
-			{
-				"name": "item3",
-				"longText": "long text."
-			} ,
-			{
-				"name": "item4",
-				"longText": "long text."
-			} ,
-			{
-				"name": "item5",
-				"longText": "long text."
-			}
-		];
-		setTimeout(function(){
-			elmSettings.fit();
-		}, 150);
+		main.dbh.getAccountList(function(list){
+			console.log(list);
+			elmSettings.querySelector('iron-list').items = list.rows;
+			setTimeout(function(){
+				elmSettings.fit();
+			}, 150);
+		});
 	}
 
 	/**
