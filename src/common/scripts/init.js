@@ -1,20 +1,14 @@
 /**
  * initialize
  */
-module.exports = function( callback ){
+module.exports = function( main, callback ){
 	var remote = require('remote');
 	var fs = remote.require('fs');
 
-	var main = new (function(){
-		var _this = this;
-		this.desktopUtils = remote.require('desktop-utils');
-		this.dataDir = this.desktopUtils.getLocalDataDir('my-todays-all');
-		// this.dataDir = remote.require('path').resolve('./tests/data');//開発中
-		console.log(this.dataDir);
-
-		this.settings = new (require('./settings.js'))(this);
-
-	})();
+	main.desktopUtils = remote.require('desktop-utils');
+	main.dataDir = main.desktopUtils.getLocalDataDir('my-todays-all');
+	// main.dataDir = remote.require('path').resolve('./tests/data');//開発中
+	console.log(main.dataDir);
 
 	$(window).load(function(){
 		$('paper-tabs')
@@ -30,6 +24,8 @@ module.exports = function( callback ){
 
 	});
 
+	main.settings = new (require('./settings.js'))(main);
+	main.sync = new (require('./sync.js'))(main);
 	main.dbh = new (require(__dirname+'/dbh.js'))(main, function(){
 		callback(main);
 	})

@@ -7,8 +7,9 @@
 	// console.log(diffdir);
 	var init = require('./common/scripts/init.js');
 
-	init(function(main){
-		window.main = main;
+	window.main = {};
+
+	init(main, function(){
 	});
 
 })(window);

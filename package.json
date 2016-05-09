@@ -28,6 +28,7 @@
     "rimraf": "^2.5.2",
     "sequelize": "^3.22.0",
     "sqlite3": "^3.1.3",
+    "timeslist-api-access": "0.0.1-alpha.2",
     "zip-folder": "^1.0.0"
   },
   "devDependencies": {
