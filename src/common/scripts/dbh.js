@@ -88,6 +88,23 @@ module.exports = function( main, callback ){
 	} // getAccountList()
 
 	/**
+	 * アカウント情報を削除する
+	 */
+	this.deleteAccount = function(accountId, callback){
+		callback = callback || function(){};
+
+		this.tbls.accounts
+			.destroy({'where':{'id': accountId}})
+			.then(function(result) {
+				// console.log(result);
+				callback(result);
+			})
+		;
+		return;
+	} // deleteAccount()
+
+
+	/**
 	 * アカウント情報を得る
 	 */
 	this.getAccount = function(accountId, callback){

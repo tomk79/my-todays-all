@@ -13,6 +13,9 @@ module.exports = function(main){
 	elmSettings.addEventListener('iron-overlay-canceled', function(){
 		// console.log('settings canceled.');
 	});
+	elmSettings.querySelector('.btn-new-account').addEventListener('click',function(){
+		main.settings.editAccount();
+	});
 
 	/**
 	 * セッティングダイアログを開く
@@ -21,15 +24,36 @@ module.exports = function(main){
 		elmSettings.open();
 		main.dbh.getAccountList(function(list){
 			console.log(list);
-			elmSettings.querySelector('iron-list').items = list.rows;
+			var ironList = elmSettings.querySelector('iron-list');
+			ironList.items = [];
+			ironList.items = list.rows;
 			setTimeout(function(){
-				elmSettings.fit();
-				$(elmSettings).find('iron-list paper-item').dblclick(function(){
+				$(elmSettings).find('iron-list paper-item').unbind('dblclick').bind('dblclick', function(){
 					var accountId = $(this).find('span').text();
 					// console.log(accountId);
 					_this.editAccount(accountId);
+					return;
 				});
-			}, 150);
+				$(elmSettings).find('iron-list paper-item paper-icon-button[icon=create]').unbind('click').bind('click', function(){
+					var accountId = $(this).parent().find('span').text();
+					// console.log(accountId);
+					_this.editAccount(accountId);
+					return;
+				});
+				$(elmSettings).find('iron-list paper-item paper-icon-button[icon=delete]').unbind('click').bind('click', function(){
+					var accountId = $(this).parent().find('span').text();
+					// console.log(accountId);
+					if(!confirm('アカウント情報 '+accountId+' を削除します。よろしいですか？')){
+						return;
+					}
+					main.dbh.deleteAccount(accountId, function(){
+						_this.open();
+					});
+					return;
+				});
+
+				elmSettings.fit();
+			}, 500);
 		});
 	}
 
@@ -39,7 +63,7 @@ module.exports = function(main){
 	elmEditAccount.querySelector('paper-button[dialog-dismiss]').addEventListener('click', function(){
 		// console.log('paper-button[dialog-dismiss] clicked.');
 		elmEditAccount.cancel();
-		elmSettings.open();
+		_this.open();
 	});
 	elmEditAccount.querySelector('paper-button[dialog-confirm]').addEventListener('click', function(){
 		var service = elmEditAccount.querySelector('paper-dropdown-menu[name=service]').selectedItem.attributes.value.value;

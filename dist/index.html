@@ -101,7 +101,7 @@
 				</div> -->
 				<h2>Accounts</h2>
 				<div>
-					<p><paper-button raised onclick="main.settings.editAccount();">新規アカウント</paper-button></p>
+					<paper-button class="btn-new-account" raised><iron-icon icon="create"></iron-icon>新規アカウント</paper-button>
 				</div>
 				<paper-listbox>
 					<iron-list as="item">
@@ -109,7 +109,9 @@
 							<paper-item>
 								<b>#[[item.id]] - [[item.account]]</b>
 								<p>[[item.service]]</p>
-								<span data-account-id="[[item.id]]">[[item.id]]</span>
+								<paper-icon-button icon="create" alt="edit"></paper-icon-button>
+								<paper-icon-button icon="delete" alt="delete"></paper-icon-button>
+								<span class="data-account-id">[[item.id]]</span>
 							</paper-item>
 						</template>
 					</iron-list>

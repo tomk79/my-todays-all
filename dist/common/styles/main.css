@@ -1,7 +1,7 @@
 html, body{
-    width: 100%;
-    height: 100%;
-    /*background: linear-gradient(#b1ffe8, #81e6ff);*/
+	width: 100%;
+	height: 100%;
+	/*background: linear-gradient(#b1ffe8, #81e6ff);*/
 	cursor: default;
 }
 body{
@@ -12,15 +12,18 @@ body{
 	-ms-user-select: none; /* IE10かららしい */
 }
 h1{
-    text-align:center;
+	text-align:center;
 }
 input,
 textarea{
-    font-family: 'Helvetica', sans-serif;
+	font-family: 'Helvetica', sans-serif;
 }
 #settings{
-    width: 80%;
+	width: 80%;
 }
 paper-dialog h1{
-    font-size: 16px;
+	font-size: 16px;
+}
+paper-dialog paper-item > span.data-account-id{
+	display: none;
 }
