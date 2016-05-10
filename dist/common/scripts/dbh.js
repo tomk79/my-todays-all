@@ -125,6 +125,8 @@ module.exports = function( main, callback ){
 		return;
 	} // getAccount()
 
-	callback();
+	setTimeout(function(){
+		callback();
+	}, 0);
 	return;
 }

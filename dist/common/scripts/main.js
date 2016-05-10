@@ -10,6 +10,7 @@
 	window.main = {};
 
 	init(main, function(){
+		main.today.update();
 	});
 
 })(window);

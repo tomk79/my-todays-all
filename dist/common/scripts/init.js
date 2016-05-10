@@ -25,9 +25,11 @@ module.exports = function( main, callback ){
 	});
 
 	main.settings = new (require('./settings.js'))(main);
-	main.sync = new (require('./sync.js'))(main);
 	main.dbh = new (require(__dirname+'/dbh.js'))(main, function(){
-		callback(main);
+		main.accountMgr = new (require('./accountMgr.js'))(main, function(){
+			main.today = new (require('./today.js'))(main);
+			callback(main);
+		});
 	})
 
 	return;
