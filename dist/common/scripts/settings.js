@@ -1,5 +1,6 @@
 module.exports = function(main){
 	var $ = require('jquery');
+	var utils79 = require('utils79');
 	var _this = this;
 
 	// セッティングダイアログ
@@ -102,7 +103,6 @@ module.exports = function(main){
 			elmEditAccount.querySelector('input[name=account-id]').value = accountId;
 			main.dbh.getAccount(accountId, function(account){
 				// console.log(account);
-				var authinfo = JSON.parse(account.authinfo);
 				var idx = null;
 				$(elmEditAccount).find('paper-dropdown-menu paper-listbox paper-item').each(function(index, elm){
 					if( $(elm).attr('value') == account.service ){
@@ -111,7 +111,7 @@ module.exports = function(main){
 				});
 				elmEditAccount.querySelector('paper-dropdown-menu paper-listbox').select(idx);
 				elmEditAccount.querySelector('paper-input[name=account]').value = account.account;
-				elmEditAccount.querySelector('paper-input[name=password]').value = authinfo.password;
+				elmEditAccount.querySelector('paper-input[name=password]').value = account.authinfo.password;
 				elmEditAccount.open();
 			});
 		}else{

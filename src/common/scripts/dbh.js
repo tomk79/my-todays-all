@@ -4,6 +4,7 @@
 module.exports = function( main, callback ){
 	var _this = this;
 	var remote = require('remote');
+	var utils79 = require('utils79');
 	var fs = remote.require('fs');
 	var Sequelize = remote.require('sequelize');
 	var sqlite = remote.require('sqlite3');
@@ -43,7 +44,7 @@ module.exports = function( main, callback ){
 		var hdl = this.tbls.accounts.create({
 			'service': service,
 			'account': account,
-			'authinfo': JSON.stringify(authinfo)
+			'authinfo': utils79.base64_encode(JSON.stringify(authinfo))
 		});
 		// console.log(hdl);
 		callback(hdl);
@@ -62,7 +63,7 @@ module.exports = function( main, callback ){
 				result.update({
 					'service': service,
 					'account': account,
-					'authinfo': JSON.stringify(authinfo)
+					'authinfo': utils79.base64_encode(JSON.stringify(authinfo))
 				});
 				// console.log(result);
 				callback(result);
@@ -113,6 +114,10 @@ module.exports = function( main, callback ){
 			.findOne({'where':{'id': accountId}})
 			.then(function(result) {
 				result = JSON.parse(JSON.stringify(result));
+				try {
+					result.authinfo = JSON.parse(utils79.base64_decode(result.authinfo));
+				} catch (e) {
+				}
 				// console.log(result);
 				callback(result);
 			})

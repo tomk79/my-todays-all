@@ -1,5 +1,11 @@
 module.exports = function(main){
 	var remote = require('remote');
-	var timeslist = remote.require('timeslist-api-access');
-	console.log(timeslist);
+	var TimeslistApi = require('timeslist-api-access');
+
+	this.auth = function(accountInfo, callback){
+		if(accountInfo.service == 'timeslist'){
+			var timeslistApi = new TimeslistApi(accountInfo.account, accountInfo.authinfo.password);
+		}
+	}
+
 }
