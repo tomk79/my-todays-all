@@ -24,7 +24,7 @@ module.exports = function(main){
 	this.open = function(){
 		elmSettings.open();
 		main.dbh.getAccountList(function(list){
-			console.log(list);
+			// console.log(list);
 			var ironList = elmSettings.querySelector('iron-list');
 			ironList.items = [];
 			ironList.items = list.rows;

@@ -24,9 +24,28 @@ module.exports = function( main, callback ){
 	this.tbls = {};
 	this.tbls.accounts = this.sequelize.define('accounts',
 		{
-			'service': { type: Sequelize.STRING },
-			'account': { type: Sequelize.STRING },
-			'authinfo': { type: Sequelize.STRING }
+			'service': { type: Sequelize.STRING() },
+			'account': { type: Sequelize.STRING() },
+			'authinfo': { type: Sequelize.TEXT() }
+		}
+	);
+	this.tbls.records = this.sequelize.define('records',
+		{
+			'remote_id': { type: Sequelize.STRING(), primaryKey: true },
+			'account_id': { type: Sequelize.INTEGER(), references: {
+				model: this.tbls.accounts,
+				key: 'id'
+			} },
+			'label': { type: Sequelize.TEXT() },
+			'description': { type: Sequelize.TEXT() },
+			'uri': { type: Sequelize.TEXT() },
+			'phase_name': { type: Sequelize.TEXT() },
+			'category_name': { type: Sequelize.TEXT() },
+			'assigned_user_name': { type: Sequelize.STRING() },
+			'posted_user_name': { type: Sequelize.STRING() },
+			'status': { type: Sequelize.INTEGER() },
+			'start_datetime': { type: Sequelize.DATE() },
+			'end_datetime': { type: Sequelize.DATE() }
 		}
 	);
 	this.sequelize.sync();
@@ -124,6 +143,43 @@ module.exports = function( main, callback ){
 		;
 		return;
 	} // getAccount()
+
+
+	/**
+	 * レコードを更新する
+	 */
+	this.updateRecord = function( accountId, remote_id, uri, label, status, recordInfo, callback ){
+		this.tbls.records
+			.findOne({'where':{
+				'account_id': accountId,
+				'remote_id': remote_id,
+				'uri': uri
+			}})
+			.then(function(result) {
+				// console.log(result);
+				var data = {
+					'account_id': accountId,
+					'remote_id': remote_id,
+					'uri': uri,
+					'label': label,
+					'status': status,
+					'phase_name': recordInfo.phase_name,
+					'category_name': recordInfo.category_name,
+					'assigned_user_name': recordInfo.assigned_user_name,
+					'posted_user_name': recordInfo.posted_user_name,
+					'start_datetime': recordInfo.start_datetime,
+					'end_datetime': recordInfo.end_datetime
+				};
+				if(result === null){
+					_this.tbls.records.create(data);
+				}else{
+					result.update(data);
+				}
+				callback();
+			})
+		;
+		return;
+	}
 
 	setTimeout(function(){
 		callback();
