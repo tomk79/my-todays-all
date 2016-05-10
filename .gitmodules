@@ -1,0 +1,3 @@
+[submodule "submodules/node-timeslist-api-access"]
+	path = submodules/node-timeslist-api-access
+	url = https://github.com/tomk79/node-timeslist-api-access.git
