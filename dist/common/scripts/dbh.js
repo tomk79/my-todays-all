@@ -49,7 +49,7 @@ module.exports = function( main, callback ){
 		}
 	);
 	this.sequelize.sync();
-	console.log(this.tbls);
+	// console.log(this.tbls);
 
 
 	/**
@@ -149,6 +149,8 @@ module.exports = function( main, callback ){
 	 * レコードを更新する
 	 */
 	this.updateRecord = function( accountId, remote_id, uri, label, status, recordInfo, callback ){
+		// console.log(accountId);
+		// callback();return;
 		this.tbls.records
 			.findOne({'where':{
 				'account_id': accountId,
@@ -176,6 +178,24 @@ module.exports = function( main, callback ){
 					result.update(data);
 				}
 				callback();
+			})
+		;
+		return;
+	} // updateRecord()
+
+	/**
+	 * レコード一覧を取得する
+	 */
+	this.getRecordList = function( callback ){
+		this.tbls.records
+			.findAndCountAll({
+				'order': 'end_datetime' // 締切が近い順
+			})
+			.then(function(result) {
+				result.rows = JSON.parse(JSON.stringify(result.rows));
+				// console.log(result.count);
+				// console.log(result.rows);
+				callback(result);
 			})
 		;
 		return;

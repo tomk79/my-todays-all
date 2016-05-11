@@ -56,7 +56,7 @@ gulp.task('.css.scss', function(){
 	gulp.src("src/**/*.css.scss")
 		.pipe(plumber())
 		.pipe(sass())
-		.pipe(autoprefixer())
+		// .pipe(autoprefixer())
 		.pipe(rename({extname: ''}))
 		.pipe(gulp.dest( "./dist/" ))
 	;

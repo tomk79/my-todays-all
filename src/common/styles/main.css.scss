@@ -27,3 +27,26 @@ paper-dialog h1{
 paper-dialog paper-item > span.data-account-id{
 	display: none;
 }
+[data-tab-content=list] .listview{
+	ul{
+		margin: 0;
+		padding: 0;
+
+		li{
+			list-style-type: none;
+			margin: 0;
+			padding: 5px 20px;
+			font-size: 14px;
+			&:hover{
+				background-color: #f9f9f9;
+			}
+
+			h3{
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				font-size: 18px;
+			}
+		}
+	}
+}
