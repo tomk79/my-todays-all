@@ -27,7 +27,7 @@ module.exports = function(main){
 								return false;
 							})
 						) );
-						$li.append( $('<div>').text(row.assigned_user_name+' → '+row.status) );
+						$li.append( $('<div>').text(row.assigned_user_name+' → '+row.status_name) );
 						$li.append( $('<div>').text(row.end_datetime) );
 						$li.append( $('<div>').text('#'+row.account_id) );
 						$ul.append($li);

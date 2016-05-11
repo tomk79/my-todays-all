@@ -43,6 +43,7 @@ module.exports = function( main, callback ){
 			'category_name': { type: Sequelize.TEXT() },
 			'assigned_user_name': { type: Sequelize.STRING() },
 			'posted_user_name': { type: Sequelize.STRING() },
+			'status_name': { type: Sequelize.STRING() },
 			'status': { type: Sequelize.INTEGER() },
 			'start_datetime': { type: Sequelize.DATE() },
 			'end_datetime': { type: Sequelize.DATE() }
@@ -112,12 +113,19 @@ module.exports = function( main, callback ){
 	 */
 	this.deleteAccount = function(accountId, callback){
 		callback = callback || function(){};
+		var _this = this;
 
-		this.tbls.accounts
-			.destroy({'where':{'id': accountId}})
+		this.tbls.records
+			.destroy({'where':{'account_id': accountId}})
 			.then(function(result) {
 				// console.log(result);
-				callback(result);
+				_this.tbls.accounts
+					.destroy({'where':{'id': accountId}})
+					.then(function(result) {
+						// console.log(result);
+						callback(result);
+					})
+				;
 			})
 		;
 		return;
@@ -165,6 +173,7 @@ module.exports = function( main, callback ){
 					'uri': uri,
 					'label': label,
 					'status': status,
+					'status_name': recordInfo.status_name,
 					'phase_name': recordInfo.phase_name,
 					'category_name': recordInfo.category_name,
 					'assigned_user_name': recordInfo.assigned_user_name,
@@ -184,11 +193,28 @@ module.exports = function( main, callback ){
 	} // updateRecord()
 
 	/**
+	 * 特定アカウントのレコードをすべて削除する
+	 */
+	this.deleteRecordsOfAccount = function( accountId, callback ){
+		this.tbls.records
+			.destroy({'where':{'account_id': accountId}})
+			.then(function(result) {
+				// console.log(result);
+				callback(result);
+			})
+		;
+		return;
+	}
+
+	/**
 	 * レコード一覧を取得する
 	 */
 	this.getRecordList = function( callback ){
 		this.tbls.records
 			.findAndCountAll({
+				'where':{
+					'status': 1
+				},
 				'order': 'end_datetime' // 締切が近い順
 			})
 			.then(function(result) {
