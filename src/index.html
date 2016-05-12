@@ -86,8 +86,12 @@
 					<h2>menu</h2>
 				</div>
 				<div>
-					<p><a href="javascript:main.desktopUtils.open(main.dataDir);">データディレクトリを開く</a></p>
-					<p><code>iron-icons</code> に登録されている。一覧は <a href="https://elements.polymer-project.org/elements/iron-icons?view=demo:demo/index.html&active=iron-icons" onclick="main.desktopUtils.open(this.href);return false;">ここ</a>。</p>
+					<ul>
+						<li><a href="javascript:main.desktopUtils.open(main.dataDir);">データディレクトリを開く</a></li>
+						<li><code>iron-icons</code> に登録されている<a href="https://elements.polymer-project.org/elements/iron-icons?view=demo:demo/index.html&active=iron-icons" onclick="main.desktopUtils.open(this.href);return false;">アイコンの一覧</a></li>
+						<li><a href="https://timeslist.com/WCM0400/input/" onclick="main.desktopUtils.open(this.href);return false;">TIMESLIST API Document</a></li>
+						<li><a href="http://developer.nulab-inc.com/ja/docs/backlog" onclick="main.desktopUtils.open(this.href);return false;">Backlog API Document</a></li>
+					</ul>
 				</div>
 			</paper-header-panel>
 		</paper-drawer-panel>
@@ -136,6 +140,7 @@
 				</paper-dropdown-menu>
 				<paper-input label="Account" type="text" name="account"></paper-input>
 				<paper-input label="Password" type="password" name="password"></paper-input>
+				<paper-input label="Space" type="text" name="space"></paper-input>
 				<input type="hidden" name="account-id" value="" />
 			</paper-dialog-scrollable>
 			<div class="buttons">

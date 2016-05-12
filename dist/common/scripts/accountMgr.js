@@ -4,6 +4,7 @@ module.exports = function(main, callback){
 	var utils79 = require('utils79');
 	var it79 = require('iterate79');
 	var TimeslistApi = remote.require('timeslist-api-access');
+	var BacklogApi = remote.require('backlog-api');
 
 	/**
 	 * アカウント情報のモデル
@@ -17,6 +18,10 @@ module.exports = function(main, callback){
 			case 'timeslist':
 				this.apiAgent = new TimeslistApi(this.accountInfo.account, this.accountInfo.authinfo.password);
 				(require('./services/timeslist.js'))(main, this);
+				break;
+			case 'backlog':
+				this.apiAgent = BacklogApi(this.accountInfo.authinfo.space, this.accountInfo.account, this.accountInfo.authinfo.password);
+				(require('./services/backlog.js'))(main, this);
 				break;
 		}
 

@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/tomk79/my-todays-all#readme",
   "dependencies": {
+    "backlog-api": "^1.0.2",
     "desktop-utils": "^0.1.0",
     "electron": "^0.4.1",
     "electron-debug": "^0.5.1",

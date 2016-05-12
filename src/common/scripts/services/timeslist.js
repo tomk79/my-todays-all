@@ -1,3 +1,6 @@
+/**
+ * timeslist.js
+ */
 module.exports = function(main, accountMgr){
 	var remote = require('remote');
 	var accounts = {};

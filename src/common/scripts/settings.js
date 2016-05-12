@@ -70,15 +70,16 @@ module.exports = function(main){
 		var service = elmEditAccount.querySelector('paper-dropdown-menu[name=service]').selectedItem.attributes.value.value;
 		var account = elmEditAccount.querySelector('paper-input[name=account]').value;
 		var password = elmEditAccount.querySelector('paper-input[name=password]').value;
+		var space = elmEditAccount.querySelector('paper-input[name=space]').value;
 		var accountId = elmEditAccount.querySelector('input[name=account-id]').value;
 		// console.log(service, account, password);
 		if(accountId){
-			main.dbh.updateAccount(accountId, service, account, {"password": password}, function(hdl){
+			main.dbh.updateAccount(accountId, service, account, {"password": password, "space": space}, function(hdl){
 				// console.log(hdl);
 				_this.open();
 			});
 		}else{
-			main.dbh.addAccount(service, account, {"password": password}, function(hdl){
+			main.dbh.addAccount(service, account, {"password": password, "space": space}, function(hdl){
 				// console.log(hdl);
 				_this.open();
 			});
@@ -97,6 +98,7 @@ module.exports = function(main){
 		elmEditAccount.querySelector('paper-dropdown-menu paper-listbox').select();
 		elmEditAccount.querySelector('paper-input[name=account]').value = '';
 		elmEditAccount.querySelector('paper-input[name=password]').value = '';
+		elmEditAccount.querySelector('paper-input[name=space]').value = '';
 
 		if(accountId){
 			elmEditAccount.querySelector('h1').innerHTML = 'Edit Account';
@@ -112,6 +114,7 @@ module.exports = function(main){
 				elmEditAccount.querySelector('paper-dropdown-menu paper-listbox').select(idx);
 				elmEditAccount.querySelector('paper-input[name=account]').value = account.account;
 				elmEditAccount.querySelector('paper-input[name=password]').value = account.authinfo.password;
+				elmEditAccount.querySelector('paper-input[name=space]').value = account.authinfo.space;
 				elmEditAccount.open();
 			});
 		}else{
