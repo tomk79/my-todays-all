@@ -10,7 +10,7 @@
 	window.main = {};
 
 	init(main, function(){
-		main.today.update();
+		main.today.refresh();
 	});
 
 })(window);

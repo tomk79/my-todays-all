@@ -196,6 +196,8 @@ module.exports = function( main, callback ){
 	 * 特定アカウントのレコードをすべて削除する
 	 */
 	this.deleteRecordsOfAccount = function( accountId, callback ){
+		// console.log('deleteRecordsOfAccount');
+		// console.log(accountId);
 		this.tbls.records
 			.destroy({'where':{'account_id': accountId}})
 			.then(function(result) {

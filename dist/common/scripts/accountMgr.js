@@ -40,7 +40,6 @@ module.exports = function(main, callback){
 				});
 			},
 			function(){
-				console.log('syncAll done!');
 				callback();
 			}
 		);

@@ -29,6 +29,7 @@ module.exports = function(main, accountMgr){
 	 * リモートサービスから情報を取得し、同期する
 	 */
 	accountMgr.sync = function(callback){
+		callback = callback || function(){};
 		// console.log(this.apiAgent);
 		var _this = this;
 
@@ -36,12 +37,19 @@ module.exports = function(main, accountMgr){
 			{},
 			function(res, json, status, headers){
 				// console.log(res);
+				// console.log(status);
+				if( res === false ){
+					callback();
+					return;
+				}
+
 				main.dbh.deleteRecordsOfAccount(_this.accountInfo.id, function(){
 					it79.ary(
 						res,
 						function(it1, row, idx){
 							// console.log(JSON.parse(JSON.stringify(row)));
 							// console.log(_this.accountInfo);
+
 							main.dbh.updateRecord(
 								_this.accountInfo.id, // account_id
 								_this.accountInfo.service+':project_no='+row.project_no+':fact_no='+row.fact_no, // remote_id

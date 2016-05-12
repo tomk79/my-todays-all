@@ -23,7 +23,10 @@ module.exports = function(main, accountMgr){
 			apiAccess('/issues', authInfo, {
 				assigneeId: [userInfo.id]
 			}, function(issues) {
-				// console.log(issues);
+				if( issues === false ){
+					callback();
+					return;
+				}
 
 				main.dbh.deleteRecordsOfAccount(_this.accountInfo.id, function(){
 					it79.ary(
@@ -89,7 +92,10 @@ module.exports = function(main, accountMgr){
 				// console.log(data);
 				rtn = data;
 			},
-			'error': function(){},
+			'error': function(err){
+				// console.log(err);
+				rtn = false;
+			},
 			'complete': function(data, dataType){
 				// console.log(data);
 				// console.log(dataType);
