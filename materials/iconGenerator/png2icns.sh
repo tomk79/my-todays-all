@@ -1,6 +1,6 @@
 #!/bin/sh
 
-filename = "app"
+filename="app"
 rm -f "${filename}.icns"
 
 array=(16 32 128 256 512)
