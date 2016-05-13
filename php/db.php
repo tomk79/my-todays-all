@@ -42,6 +42,40 @@ $rtn['error'] = 0;
 $rtn['message'] = 'success';
 
 switch( $query->method ){
+	case "initialize":
+		$db = ORM::get_db();
+		ob_start();?>
+			CREATE TABLE IF NOT EXISTS accounts (
+				id INTEGER PRIMARY KEY,
+				service STRING,
+				account STRING,
+				authinfo TEXT,
+				createdAt DATETIME,
+				updatedAt DATETIME
+			);<?php
+		$db->exec( trim( ob_get_clean() ) );
+
+		ob_start();?>
+			CREATE TABLE IF NOT EXISTS records (
+				remote_id STRING PRIMARY KEY,
+				account_id INTEGER,
+				label TEXT,
+				description TEXT,
+				uri TEXT,
+				phase_name TEXT,
+				category_name TEXT,
+				assigned_user_name STRING,
+				posted_user_name STRING,
+				status_name STRING,
+				status INTEGER,
+				start_datetime DATETIME,
+				end_datetime DATETIME,
+				createdAt DATETIME,
+				updatedAt DATETIME
+			);<?php
+		$db->exec( trim( ob_get_clean() ) );
+		$rtn['data'] = true;
+
 	case "getAccountList":
 		$result = ORM::for_table('accounts')
 			->find_array();

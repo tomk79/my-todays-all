@@ -8,8 +8,6 @@ module.exports = function( main, callback ){
 	var unpackedPath = remote.require('./node/unpackedPath.js');
 	var nodePhpBin = remote.require( unpackedPath('node_modules/node-php-bin/') ).get();
 	var fs = remote.require('fs');
-	var Sequelize = remote.require('sequelize');
-	var sqlite = remote.require('sqlite3');
 
 	try {
 		fs.mkdirSync(main.dataDir);
@@ -17,42 +15,6 @@ module.exports = function( main, callback ){
 	}
 	var dbPath = remote.require('path').resolve(main.dataDir, 'db.sqlite');
 	console.log("DB Path: " + dbPath);
-	this.sequelize = new Sequelize(undefined, undefined, undefined, {
-		dialect: 'sqlite',
-		connection: new sqlite.Database( dbPath ),
-		storage: dbPath
-	});
-
-	this.tbls = {};
-	this.tbls.accounts = this.sequelize.define('accounts',
-		{
-			'service': { type: Sequelize.STRING() },
-			'account': { type: Sequelize.STRING() },
-			'authinfo': { type: Sequelize.TEXT() }
-		}
-	);
-	this.tbls.records = this.sequelize.define('records',
-		{
-			'remote_id': { type: Sequelize.STRING(), primaryKey: true },
-			'account_id': { type: Sequelize.INTEGER(), references: {
-				model: this.tbls.accounts,
-				key: 'id'
-			} },
-			'label': { type: Sequelize.TEXT() },
-			'description': { type: Sequelize.TEXT() },
-			'uri': { type: Sequelize.TEXT() },
-			'phase_name': { type: Sequelize.TEXT() },
-			'category_name': { type: Sequelize.TEXT() },
-			'assigned_user_name': { type: Sequelize.STRING() },
-			'posted_user_name': { type: Sequelize.STRING() },
-			'status_name': { type: Sequelize.STRING() },
-			'status': { type: Sequelize.INTEGER() },
-			'start_datetime': { type: Sequelize.DATE() },
-			'end_datetime': { type: Sequelize.DATE() }
-		}
-	);
-	this.sequelize.sync();
-	// console.log(this.tbls);
 
 	/**
 	 * クエリを実行する
@@ -63,7 +25,7 @@ module.exports = function( main, callback ){
 		var arg = [];
 		arg.push( unpackedPath('php/db.php') );
 		arg.push('--db');
-		arg.push(main.dataDir+'/db.sqlite');
+		arg.push( dbPath );
 		// arg.push(utils79.base64_encode(JSON.stringify(query)));
 		arg.push(JSON.stringify(query));
 		// console.log(arg);
@@ -242,8 +204,10 @@ module.exports = function( main, callback ){
 		return;
 	}
 
-	setTimeout(function(){
+	this.query({
+		'method':'initialize'
+	}, function(rows, err, message){
 		callback();
-	}, 0);
+	});
 	return;
 }
