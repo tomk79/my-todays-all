@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');//CSSコンパイラ
+var copy = require('gulp-copy');//コピー機能
 var autoprefixer = require("gulp-autoprefixer");//CSSにベンダープレフィックスを付与してくれる
 var uglify = require("gulp-uglify");//JavaScriptファイルの圧縮ツール
 var concat = require('gulp-concat');//ファイルの結合ツール
@@ -37,11 +38,49 @@ gulp.task("server-libs", function() {
 
 // unpackするリソースをコピーする
 gulp.task('unpacked', function(){
-	gulp.src("node_modules/sequelize/**/*")
-		.pipe(gulp.dest( "./unpacked/node_modules/sequelize" ))
-	;
-	gulp.src("node_modules/sqlite3/**/*")
-		.pipe(gulp.dest( "./unpacked/node_modules/sqlite3" ))
+	var unpackDependencies = [
+		'sequelize',
+		'sqlite3',
+
+		'debug',
+		'ms',
+		'terraformer',
+		'validator',
+		'xmlbuilder',
+		'xmlrpc',
+
+		'wkx',
+		'validator',
+		// 'toposort-class',
+		'terraformer-wkt-parser',
+		'shimmer',
+		'semver',
+		'retry-as-promised',
+		'node-uuid',
+		'moment-timezone',
+		'moment',
+		'lodash',
+		'inflection',
+		'generic-pool',
+		'dottie',
+		'depd',
+		'bluebird'
+	];
+	for(var i in unpackDependencies){
+		var packageName = unpackDependencies[i];
+		gulp.src('node_modules/'+packageName+'/**/*')
+			.pipe(gulp.dest( './unpacked/node_modules/'+packageName+'/' ))
+		;
+	}
+	gulp.src('node_modules/toposort-class/**/*')
+		.pipe(gulp.dest( './unpacked/node_modules/toposort-class/' ))
+		.on('end', function(){
+			// ↓これをしないと、unpacked内で繋がらなくなる。なぜか。
+			gulp.src('node_modules/toposort-class/build/toposort.js')
+				.pipe(concat('index.js'))
+				.pipe(gulp.dest( './unpacked/node_modules/toposort-class/' ))
+			;
+		})
 	;
 	// gulp.src("node_modules/node-php-bin/**/*")
 	// 	.pipe(gulp.dest( "./unpacked/node_modules/node-php-bin" ))

@@ -11,6 +11,7 @@ module.exports = function(main){
 	var $btnRefresh = $('paper-icon-button.btn-refresh');
 
 	this.refresh = function(){
+		console.log('today.refresh() start;');
 
 		$btnRefresh.attr({'icon':'autorenew'});
 		$listview.html('');
@@ -22,6 +23,7 @@ module.exports = function(main){
 	} // refresh()
 
 	this.redraw = function(){
+		console.log('today.redraw() start;');
 
 		$btnRefresh.attr({'icon':'autorenew'});
 		$listview.html('');

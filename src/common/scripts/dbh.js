@@ -97,12 +97,13 @@ module.exports = function( main, callback ){
 	 * アカウント情報の一覧を取得する
 	 */
 	this.getAccountList = function(callback){
+		console.log('main.dbh.getAccountList() start;');
 		this.tbls.accounts
 			.findAndCountAll({})
 			.then(function(result) {
 				result.rows = JSON.parse(JSON.stringify(result.rows));
-				// console.log(result.count);
-				// console.log(result.rows);
+				console.log(result.count);
+				console.log(result.rows);
 				callback(result);
 			})
 		;

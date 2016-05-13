@@ -29,8 +29,8 @@ function build( condition, callback ){
 	}
 
 	var version = '0.36.1';
-	var app_bundle_id = 'jp.pxt.www'; //<- 自分のドメインなどを使用してください
-	var helper_bundle_id = 'jp.pxt.www'; //<- 自分のドメインなどを使用してください
+	var app_bundle_id = 'jp.pxt.applications.my-todays-all'; //<- 自分のドメインなどを使用してください
+	var helper_bundle_id = 'jp.pxt.applications.my-todays-all'; //<- 自分のドメインなどを使用してください
 
 	var zip = function (relativePath, relativeZipPath, cb) {
 		zipFolder(

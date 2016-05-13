@@ -28,6 +28,7 @@ module.exports = function( main, callback ){
 		// menubar セットアップ
 		var electron = remote.require('electron');
 		var Menu = electron.Menu;
+		var mainWindow = window.main.currentWindow;
 		// return;
 
 		// if (process.platform == 'darwin') {
@@ -42,7 +43,10 @@ module.exports = function( main, callback ){
 						{
 							label: 'Quit',
 							accelerator: 'Command+Q',
-							click: function () { app.quit(); }
+							click: function () {
+								window.close();
+								// app.quit();
+							}
 						},
 					]
 				},
@@ -51,7 +55,13 @@ module.exports = function( main, callback ){
 					submenu: [
 						{ label: "About Application", selector: "orderFrontStandardAboutPanel:" },
 						{ type: "separator" },
-						{ label: "Quit", accelerator: "Command+Q", click: function () { app.quit(); } }
+						{ label: "Quit",
+							accelerator: "Command+Q",
+							click: function () {
+								window.close();
+								// app.quit();
+							}
+						}
 					]
 				},
 				{
@@ -122,8 +132,11 @@ module.exports = function( main, callback ){
 	})();
 
 	main.settings = new (require('./settings.js'))(main);
+	console.log('setting main.dbh');
 	main.dbh = new (require(__dirname+'/dbh.js'))(main, function(){
+		console.log('setting main.accountMgr');
 		main.accountMgr = new (require('./accountMgr.js'))(main, function(){
+			console.log('setting main.today');
 			main.today = new (require('./today.js'))(main);
 			callback(main);
 		});

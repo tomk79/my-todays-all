@@ -1,6 +1,6 @@
 {
   "name": "Today",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.1+nb",
   "description": "Listing your todays all issues.",
   "private": true,
   "main": "main.js",
@@ -43,6 +43,7 @@
     "gulp-autoprefixer": "^3.1.0",
     "gulp-browserify": "^0.5.1",
     "gulp-concat": "^2.6.0",
+    "gulp-copy": "0.0.2",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.2.0",
