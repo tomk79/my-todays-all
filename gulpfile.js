@@ -39,32 +39,9 @@ gulp.task("server-libs", function() {
 // unpackするリソースをコピーする
 gulp.task('unpacked', function(){
 	var unpackDependencies = [
-		'sequelize',
-		'sqlite3',
-
-		'debug',
-		'ms',
-		'terraformer',
-		'validator',
-		'xmlbuilder',
-		'xmlrpc',
-
-		'wkx',
-		'validator',
-		// 'toposort-class',
-		'terraformer-wkt-parser',
-		'shimmer',
-		'semver',
-		'retry-as-promised',
-		'node-uuid',
-		'moment-timezone',
-		'moment',
-		'lodash',
-		'inflection',
-		'generic-pool',
-		'dottie',
-		'depd',
-		'bluebird'
+		// 'sequelize',
+		// 'sqlite3',
+		'node-php-bin'
 	];
 	for(var i in unpackDependencies){
 		var packageName = unpackDependencies[i];
@@ -72,28 +49,15 @@ gulp.task('unpacked', function(){
 			.pipe(gulp.dest( './unpacked/node_modules/'+packageName+'/' ))
 		;
 	}
-	gulp.src('node_modules/toposort-class/**/*')
-		.pipe(gulp.dest( './unpacked/node_modules/toposort-class/' ))
-		.on('end', function(){
-			// ↓これをしないと、unpacked内で繋がらなくなる。なぜか。
-			gulp.src('node_modules/toposort-class/build/toposort.js')
-				.pipe(concat('index.js'))
-				.pipe(gulp.dest( './unpacked/node_modules/toposort-class/' ))
-			;
-		})
+	gulp.src("vendor/**/*")
+		.pipe(gulp.dest( "./unpacked/vendor" ))
 	;
-	// gulp.src("node_modules/node-php-bin/**/*")
-	// 	.pipe(gulp.dest( "./unpacked/node_modules/node-php-bin" ))
-	// ;
-	// gulp.src("vendor/**/*")
-	// 	.pipe(gulp.dest( "./unpacked/vendor" ))
-	// ;
-	// gulp.src("php/**/*")
-	// 	.pipe(gulp.dest( "./unpacked/php" ))
-	// ;
-	// gulp.src(["composer.json","composer.lock"])
-	// 	.pipe(gulp.dest( "./unpacked" ))
-	// ;
+	gulp.src("php/**/*")
+		.pipe(gulp.dest( "./unpacked/php" ))
+	;
+	gulp.src(["composer.json","composer.lock"])
+		.pipe(gulp.dest( "./unpacked" ))
+	;
 });
 
 // src 中の *.css.scss を処理
@@ -149,7 +113,7 @@ gulp.task(".html.twig", function() {
 
 // src 中のすべての拡張子を監視して処理
 gulp.task("watch", function() {
-	gulp.watch(["src/**/*"], _tasks);
+	gulp.watch(["src/**/*","php/**/*"], _tasks);
 });
 
 // src 中のすべての拡張子を処理(default)
