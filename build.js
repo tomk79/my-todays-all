@@ -74,7 +74,7 @@ function build( condition, callback ){
 			asar: true, // aserに固める
 			"asar-unpack-dir": "unpacked",
 			prune: true,
-			ignore: 'node_modules/(' + ignores + '|\.bin)|build\.js',
+			ignore: 'node_modules/(' + ignores + '|\.bin)|build|build\.js|tests|src|submodules|materials|gulpfile.js|bower.json|.bowerrc',
 			'version-string': {
 				CompanyName: 'tomk79',
 				FileDescription: config.description,
