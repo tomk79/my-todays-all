@@ -37,18 +37,24 @@ gulp.task("server-libs", function() {
 
 // unpackするリソースをコピーする
 gulp.task('unpacked', function(){
-	gulp.src("node_modules/node-php-bin/**/*")
-		.pipe(gulp.dest( "./unpacked/node_modules/node-php-bin" ))
+	gulp.src("node_modules/sequelize/**/*")
+		.pipe(gulp.dest( "./unpacked/node_modules/sequelize" ))
 	;
-	gulp.src("vendor/**/*")
-		.pipe(gulp.dest( "./unpacked/vendor" ))
+	gulp.src("node_modules/sqlite3/**/*")
+		.pipe(gulp.dest( "./unpacked/node_modules/sqlite3" ))
 	;
-	gulp.src("php/**/*")
-		.pipe(gulp.dest( "./unpacked/php" ))
-	;
-	gulp.src(["composer.json","composer.lock"])
-		.pipe(gulp.dest( "./unpacked" ))
-	;
+	// gulp.src("node_modules/node-php-bin/**/*")
+	// 	.pipe(gulp.dest( "./unpacked/node_modules/node-php-bin" ))
+	// ;
+	// gulp.src("vendor/**/*")
+	// 	.pipe(gulp.dest( "./unpacked/vendor" ))
+	// ;
+	// gulp.src("php/**/*")
+	// 	.pipe(gulp.dest( "./unpacked/php" ))
+	// ;
+	// gulp.src(["composer.json","composer.lock"])
+	// 	.pipe(gulp.dest( "./unpacked" ))
+	// ;
 });
 
 // src 中の *.css.scss を処理

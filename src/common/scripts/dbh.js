@@ -5,9 +5,10 @@ module.exports = function( main, callback ){
 	var _this = this;
 	var remote = require('remote');
 	var utils79 = require('utils79');
+	var unpackedPath = remote.require('./node/unpackedPath.js');
 	var fs = remote.require('fs');
-	var Sequelize = remote.require('sequelize');
-	var sqlite = remote.require('sqlite3');
+	var Sequelize = remote.require(unpackedPath('node_modules/sequelize'));
+	var sqlite = remote.require(unpackedPath('node_modules/sqlite3'));
 
 	try {
 		fs.mkdirSync(main.dataDir);

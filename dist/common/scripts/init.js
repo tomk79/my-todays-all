@@ -28,7 +28,7 @@ module.exports = function( main, callback ){
 		// menubar セットアップ
 		var electron = remote.require('electron');
 		var Menu = electron.Menu;
-		return;
+		// return;
 
 		// if (process.platform == 'darwin') {
 		// var name = require('electron').app.getName();
