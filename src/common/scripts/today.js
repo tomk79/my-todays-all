@@ -8,53 +8,71 @@ module.exports = function(main){
 	var desktopUtils = remote.require('desktop-utils');
 
 	var $listview = $('[data-tab-content=list] .listview');
+	var $calview = $('[data-tab-content=calendar] .listview');
+	var $ganttview = $('[data-tab-content=ganttchart] .listview');
 	var $btnRefresh = $('paper-icon-button.btn-refresh');
 
 	this.refresh = function(){
 		console.log('today.refresh() start;');
+		main.loadingStart();
 
 		$btnRefresh.attr({'icon':'autorenew'});
-		$listview.html('');
 
 		main.accountMgr.syncAll(function(){
 			console.info('syncAll() done!!');
-			_this.redraw();
+			_this.redraw(function(){
+				main.loadingEnd();
+			});
 		});
 	} // refresh()
 
-	this.redraw = function(){
+	this.redraw = function( callback ){
+		callback = callback || function(){};
 		console.log('today.redraw() start;');
 
 		$btnRefresh.attr({'icon':'autorenew'});
 		$listview.html('');
+		$calview.html('');
+		$ganttview.html('');
 
 		main.dbh.getRecordList(function(records){
 			// console.log(records.rows);
-			$ul = $('<ul>');
+			$ul = $('<div>');
 			$listview.html('').append($ul);
 			it79.ary(
 				records.rows,
 				function(it1, row, idx){
 					// console.log(row);
-					var $li = $('<li>');
-					$li.append( $('<h3>').text(row.label) );
-					$li.append( $('<div>').append($('<a>')
-						.text(row.uri)
+					var $item = $('<paper-item>')
 						.attr({'href':row.uri})
 						.click(function(){
-							desktopUtils.open(this.href);
-							return false;
+							desktopUtils.open($(this).attr('href'));
 						})
+					;
+					$item.append( $('<h3>').text(row.label) );
+					$item.append( $('<div>').append($('<span>')
+						.text(row.uri)
+						// .attr({'href':row.uri})
+						// .click(function(){
+						// 	desktopUtils.open(this.href);
+						// 	return false;
+						// })
 					) );
-					$li.append( $('<div>').text(row.assigned_user_name+' → '+row.status_name) );
-					$li.append( $('<div>').text(row.end_datetime) );
-					$li.append( $('<div>').text('#'+row.account_id) );
-					$ul.append($li);
+					$item.append( $('<div>')
+						.append($('<span>').text(row.assigned_user_name))
+						.append($('<span>').text(row.status_name))
+					);
+					$item.append( $('<div>').text(row.end_datetime) );
+					$item.append( $('<div>').text('#'+row.account_id) );
+					$ul.append($item);
 					it1.next();
 				},
 				function(){
 					$btnRefresh.attr({'icon':'refresh'});
+					$calview.html($listview.html());
+					$ganttview.html($listview.html());
 					console.info('Standby!!');
+					callback();
 				}
 			);
 		});

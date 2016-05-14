@@ -11,7 +11,8 @@
 	window.main.currentWindow = remote.getCurrentWindow();
 
 	init(main, function(){
-		main.today.refresh();
+		// main.today.refresh();
+		main.today.redraw();
 	});
 
 })(window);

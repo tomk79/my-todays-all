@@ -31,29 +31,41 @@ module.exports = function(main, callback){
 	 * すべてのアカウントを同期する
 	 */
 	this.syncAll = function(callback){
-		it79.ary(
-			accounts,
-			function(it1, account, idx){
-				account.sync(function(){
-					// console.log(account.apiAgent.accesskey);
-					it1.next();
-				});
-			},
-			function(){
-				callback();
-			}
-		);
-	}
+		this.reloadAccounts(function(){
+			it79.ary(
+				accounts,
+				function(it1, account, idx){
+					account.sync(function(){
+						// console.log(account.apiAgent.accesskey);
+						it1.next();
+					});
+				},
+				function(){
+					callback();
+				}
+			);
+		});
+	} // syncAll()
 
-	main.dbh.getAccountList(function(accountList){
-		// console.log(accountList.rows);
-		for(var idx in accountList.rows){
-			var accountInfo = accountList.rows[idx];
-			// console.log(accountInfo);
-			accountInfo.authinfo = JSON.parse( utils79.base64_decode(accountInfo.authinfo) );
-			accounts[accountInfo.id] = new Account(accountInfo);
-		}
-		// console.log(accounts);
+	/**
+	 * アカウント情報を再読み込みする
+	 */
+	this.reloadAccounts = function(callback){
+		main.dbh.getAccountList(function(accountList){
+			// console.log(accountList.rows);
+			for(var idx in accountList.rows){
+				var accountInfo = accountList.rows[idx];
+				// console.log(accountInfo);
+				accountInfo.authinfo = JSON.parse( utils79.base64_decode(accountInfo.authinfo) );
+				accounts[accountInfo.id] = new Account(accountInfo);
+			}
+			// console.log(accounts);
+			callback();
+		});
+		return;
+	} // reloadAccounts()
+
+	this.reloadAccounts(function(){
 		callback();
 	});
 

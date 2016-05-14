@@ -17,8 +17,11 @@ module.exports = function( main, callback ){
 			// console.log(e);
 			var $selected = $(this).find('paper-tab.iron-selected');
 			// console.log($selected.attr('data-tab-name'));
-			$('[data-tab-content]').hide();
-			$('[data-tab-content='+$selected.attr('data-tab-name')+']').show();
+			$('[data-tab-content]').hide(0, function(){
+				setTimeout(function(){
+					$('[data-tab-content='+$selected.attr('data-tab-name')+']').show(0);
+				}, 10);
+			});
 		})
 		;
 
@@ -130,6 +133,25 @@ module.exports = function( main, callback ){
 			Menu.setApplicationMenu(menu);
 		}
 	})();
+
+	/**
+	 * ローディング表示を開始する
+	 */
+	main.loadingStart = function(callback){
+		callback = callback || function(){};
+		$('#now-loading').get(0).open();
+		callback();
+	}
+
+	/**
+	 * ローディング表示を終了する
+	 */
+	main.loadingEnd = function(callback){
+		callback = callback || function(){};
+		$('#now-loading').get(0).close();
+		callback();
+	}
+
 
 	main.settings = new (require('./settings.js'))(main);
 	console.log('setting main.dbh');

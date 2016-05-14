@@ -23,6 +23,10 @@ input,
 textarea {
   font-family: 'Helvetica', sans-serif; }
 
+paper-item:hover {
+  cursor: pointer;
+  background-color: #fafafa; }
+
 #settings {
   width: 80%; }
 
@@ -32,18 +36,30 @@ paper-dialog h1 {
 paper-dialog paper-item > span.data-account-id {
   display: none; }
 
-[data-tab-content=list] .listview ul {
-  margin: 0;
-  padding: 0; }
-  [data-tab-content=list] .listview ul li {
-    list-style-type: none;
+[data-tab-content=list] .listview,
+[data-tab-content=calendar] .listview,
+[data-tab-content=ganttchart] .listview {
+  overflow: auto; }
+  [data-tab-content=list] .listview paper-item,
+  [data-tab-content=calendar] .listview paper-item,
+  [data-tab-content=ganttchart] .listview paper-item {
+    display: block;
     margin: 0;
-    padding: 5px 20px;
+    padding: 10px 20px;
     font-size: 14px; }
-    [data-tab-content=list] .listview ul li:hover {
-      background-color: #f9f9f9; }
-    [data-tab-content=list] .listview ul li h3 {
+    [data-tab-content=list] .listview paper-item h3,
+    [data-tab-content=calendar] .listview paper-item h3,
+    [data-tab-content=ganttchart] .listview paper-item h3 {
+      display: block;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      font-size: 18px; }
+      font-size: 18px;
+      font-weight: bold;
+      clear: both;
+      float: none; }
+    [data-tab-content=list] .listview paper-item div,
+    [data-tab-content=calendar] .listview paper-item div,
+    [data-tab-content=ganttchart] .listview paper-item div {
+      display: block;
+      clear: both; }
