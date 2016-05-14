@@ -7,7 +7,7 @@ module.exports = function(main){
 	var it79 = require('iterate79');
 	var desktopUtils = remote.require('desktop-utils');
 
-	var $listview = $('[data-tab-content=list] .listview');
+	var $listview = $('[data-tab-content=list] .list__outline');
 	var $calview = $('[data-tab-content=calendar] .listview');
 	var $ganttview = $('[data-tab-content=ganttchart] .listview');
 	var $btnRefresh = $('paper-icon-button.btn-refresh');
@@ -31,32 +31,41 @@ module.exports = function(main){
 		console.log('today.redraw() start;');
 
 		$btnRefresh.attr({'icon':'autorenew'});
-		$listview.html('');
+		$listview.find('.listview').html('');
 		$calview.html('');
 		$ganttview.html('');
 
 		main.dbh.getRecordList(function(records){
 			// console.log(records.rows);
-			$ul = $('<div>');
-			$listview.html('').append($ul);
+			$ul = {
+				'unlimited': $('<div>'),
+				'expiration': $('<div>'),
+				'today': $('<div>'),
+				'near': $('<div>')
+			};
+			$listview.find('.list__listview-unlimited .listview').html('').append($ul['unlimited']);
+			$listview.find('.list__listview-expiration .listview').html('').append($ul['expiration']);
+			$listview.find('.list__listview-today .listview').html('').append($ul['today']);
+			$listview.find('.list__listview-near .listview').html('').append($ul['near']);
 			it79.ary(
 				records.rows,
 				function(it1, row, idx){
 					// console.log(row);
 					var $item = $('<paper-item>')
 						.attr({'href':row.uri})
-						.click(function(){
+						.dblclick(function(){
 							desktopUtils.open($(this).attr('href'));
 						})
 					;
 					$item.append( $('<h3>').text(row.label) );
-					$item.append( $('<div>').append($('<span>')
-						.text(row.uri)
-						// .attr({'href':row.uri})
-						// .click(function(){
-						// 	desktopUtils.open(this.href);
-						// 	return false;
-						// })
+					$item.append( $('<div>').append($('<a>')
+						.append( $('<paper-icon-button icon="explore">') )
+						.append( $('<span>').text(row.uri) )
+						.attr({'href':row.uri})
+						.click(function(){
+							desktopUtils.open(this.href);
+							return false;
+						})
 					) );
 					$item.append( $('<div>')
 						.append($('<span>').text(row.assigned_user_name))
@@ -64,13 +73,17 @@ module.exports = function(main){
 					);
 					$item.append( $('<div>').text(row.end_datetime) );
 					$item.append( $('<div>').text('#'+row.account_id) );
-					$ul.append($item);
+					if( !row.end_datetime ){
+						$ul['unlimited'].append($item);
+					}else{
+						$ul['today'].append($item);
+					}
 					it1.next();
 				},
 				function(){
 					$btnRefresh.attr({'icon':'refresh'});
-					$calview.html($listview.html());
-					$ganttview.html($listview.html());
+					$calview.html($listview.find('.list__listview-today .listview').html()); // TODO: 暫定
+					$ganttview.html($listview.find('.list__listview-today .listview').html()); // TODO: 暫定
 					console.info('Standby!!');
 					callback();
 				}

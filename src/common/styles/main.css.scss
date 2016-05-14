@@ -31,7 +31,40 @@ paper-dialog h1{
 paper-dialog paper-item > span.data-account-id{
 	display: none;
 }
-[data-tab-content=list],
+[data-tab-content=list]{
+	&__wrapper{
+		width:90%;
+		margin:10px auto;
+		float:none;
+	}
+	paper-card{
+		width:100%;
+	}
+	.listview{
+		overflow: auto;
+		paper-item{
+			display: block;
+			margin: 0;
+			padding: 10px 20px;
+			font-size: 14px;
+
+			h3{
+				display: block;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				font-size: 18px;
+				font-weight: bold;
+				clear: both;
+				float: none;
+			}
+			div{
+				display: block;
+				clear: both;
+			}
+		}
+	}
+}
 [data-tab-content=calendar],
 [data-tab-content=ganttchart]{
 	.listview{

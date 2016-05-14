@@ -27,7 +27,7 @@ var Menu = electron.Menu;
 // initialization and is ready to create browser windows.
 app.on('ready', function () {
 	// Create the browser window.
-	mainWindow = new BrowserWindow({ width: 600, height: 470 });
+	mainWindow = new BrowserWindow({ width: 840, height: 540 });
 	// and load the index.html of the app.
 	mainWindow.loadUrl('file://' + __dirname + '/dist/index.html');
 
