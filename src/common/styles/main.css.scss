@@ -21,6 +21,10 @@ textarea{
 paper-item:hover{
 	cursor: pointer;
 	background-color:#fafafa;
+
+	&[focused]{
+		background-color:#f9f9f9;
+	}
 }
 #settings{
 	width: 80%;
@@ -108,5 +112,26 @@ paper-dialog paper-item > span.data-account-id{
 				clear: both;
 			}
 		}
+	}
+}
+.status{
+	font-size: 78%;
+	padding:0.2em 1em;
+	border-radius:0.4em;
+	background-color: #f9e3e3;
+	color: #333;
+}
+.service{
+	font-size: 78%;
+	padding:0.2em 1em;
+	border-radius:0.4em;
+	background-color: #f9e3e3;
+	color: #333;
+
+	&__timeslist{
+		background-color: #eee;
+	}
+	&__backlog{
+		background-color: #efe;
 	}
 }

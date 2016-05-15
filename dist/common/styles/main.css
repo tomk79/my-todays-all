@@ -26,6 +26,8 @@ textarea {
 paper-item:hover {
   cursor: pointer;
   background-color: #fafafa; }
+  paper-item:hover[focused] {
+    background-color: #f9f9f9; }
 
 #settings {
   width: 80%; }
@@ -100,3 +102,21 @@ paper-dialog paper-item > span.data-account-id {
     [data-tab-content=ganttchart] .listview paper-item div {
       display: block;
       clear: both; }
+
+.status {
+  font-size: 78%;
+  padding: 0.2em 1em;
+  border-radius: 0.4em;
+  background-color: #f9e3e3;
+  color: #333; }
+
+.service {
+  font-size: 78%;
+  padding: 0.2em 1em;
+  border-radius: 0.4em;
+  background-color: #f9e3e3;
+  color: #333; }
+  .service__timeslist {
+    background-color: #eee; }
+  .service__backlog {
+    background-color: #efe; }
