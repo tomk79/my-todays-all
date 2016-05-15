@@ -32,13 +32,27 @@ paper-dialog paper-item > span.data-account-id{
 	display: none;
 }
 [data-tab-content=list]{
-	&__wrapper{
+	.list__outline{
 		width:90%;
 		margin:10px auto;
 		float:none;
 	}
 	paper-card{
 		width:100%;
+		margin:10px 0;
+		background-color: #fff;
+		&.list__listview-unlimited{
+			background-color: #f8f8f8;
+		}
+		&.list__listview-expiration{
+			background-color: #fbb;
+		}
+		&.list__listview-today{
+			background-color: #99fd67;
+		}
+		&.list__listview-near{
+			background-color: #fff;
+		}
 	}
 	.listview{
 		overflow: auto;
@@ -47,6 +61,10 @@ paper-dialog paper-item > span.data-account-id{
 			margin: 0;
 			padding: 10px 20px;
 			font-size: 14px;
+			background-color: #fff;
+			&:hover{
+				background-color: #fafafa;
+			}
 
 			h3{
 				display: block;

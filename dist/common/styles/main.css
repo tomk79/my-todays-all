@@ -36,13 +36,23 @@ paper-dialog h1 {
 paper-dialog paper-item > span.data-account-id {
   display: none; }
 
-[data-tab-content=list]__wrapper {
+[data-tab-content=list] .list__outline {
   width: 90%;
   margin: 10px auto;
   float: none; }
 
 [data-tab-content=list] paper-card {
-  width: 100%; }
+  width: 100%;
+  margin: 10px 0;
+  background-color: #fff; }
+  [data-tab-content=list] paper-card.list__listview-unlimited {
+    background-color: #f8f8f8; }
+  [data-tab-content=list] paper-card.list__listview-expiration {
+    background-color: #fbb; }
+  [data-tab-content=list] paper-card.list__listview-today {
+    background-color: #99fd67; }
+  [data-tab-content=list] paper-card.list__listview-near {
+    background-color: #fff; }
 
 [data-tab-content=list] .listview {
   overflow: auto; }
@@ -50,7 +60,10 @@ paper-dialog paper-item > span.data-account-id {
     display: block;
     margin: 0;
     padding: 10px 20px;
-    font-size: 14px; }
+    font-size: 14px;
+    background-color: #fff; }
+    [data-tab-content=list] .listview paper-item:hover {
+      background-color: #fafafa; }
     [data-tab-content=list] .listview paper-item h3 {
       display: block;
       overflow: hidden;

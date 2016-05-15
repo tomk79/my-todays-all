@@ -47,6 +47,11 @@ module.exports = function(main){
 			$listview.find('.list__listview-expiration .listview').html('').append($ul['expiration']);
 			$listview.find('.list__listview-today .listview').html('').append($ul['today']);
 			$listview.find('.list__listview-near .listview').html('').append($ul['near']);
+			$listview.find('.list__listview-unlimited').hide();
+			$listview.find('.list__listview-expiration').hide();
+			$listview.find('.list__listview-today').hide();
+			$listview.find('.list__listview-near').hide();
+
 			it79.ary(
 				records.rows,
 				function(it1, row, idx){
@@ -73,14 +78,40 @@ module.exports = function(main){
 					);
 					$item.append( $('<div>').text(row.end_datetime) );
 					$item.append( $('<div>').text('#'+row.account_id) );
+
 					if( !row.end_datetime ){
 						$ul['unlimited'].append($item);
 					}else{
-						$ul['today'].append($item);
+						var endTime = new Date(row.end_datetime);
+						var now = new Date();
+						var today = now.getFullYear()*10000 + (now.getMonth()+1)*100 + now.getDate()
+						var endDay = endTime.getFullYear()*10000 + (endTime.getMonth()+1)*100 + endTime.getDate()
+						// console.log(today);
+						// console.log(endDay);
+						// console.log($ul['today'].find('>*').size());
+						if( today == endDay ){
+							$ul['today'].append($item);
+						}else if( today > endDay ){
+							$ul['expiration'].append($item);
+						}else{
+							if($ul['today'].find('>*').size() < 7){
+								$ul['today'].append($item);
+							}else{
+								$ul['near'].append($item);
+							}
+						}
 					}
 					it1.next();
 				},
 				function(){
+					for(var idx in $ul){
+						if( $ul[idx].find('>*').size() ){
+							$listview.find('.list__listview-'+idx).show();
+						}
+					}
+					$('.list__outline').show();
+
+
 					$btnRefresh.attr({'icon':'refresh'});
 					$calview.html($listview.find('.list__listview-today .listview').html()); // TODO: 暫定
 					$ganttview.html($listview.find('.list__listview-today .listview').html()); // TODO: 暫定

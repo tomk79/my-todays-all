@@ -21,8 +21,10 @@ module.exports = function(main, accountMgr){
 		apiAccess('/users/myself', authInfo, {}, function(userInfo) {
 			// console.log(userInfo);
 			apiAccess('/issues', authInfo, {
-				assigneeId: [userInfo.id]
+				'assigneeId': [userInfo.id],
+				'count': 100
 			}, function(issues) {
+				// console.log(issues);
 				if( issues === false ){
 					callback();
 					return;
