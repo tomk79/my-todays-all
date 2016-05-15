@@ -10,22 +10,32 @@ module.exports = function( main, callback ){
 	// main.dataDir = remote.require('path').resolve('./tests/data');//開発中
 	console.log(main.dataDir);
 
-	$(window).load(function(){
-		$('paper-tabs')
-		.bind('iron-select', function(e){
-			// console.log('selected!');
-			// console.log(e);
-			var $selected = $(this).find('paper-tab.iron-selected');
-			// console.log($selected.attr('data-tab-name'));
-			$('[data-tab-content]').hide(0, function(){
-				setTimeout(function(){
-					$('[data-tab-content='+$selected.attr('data-tab-name')+']').show(0);
-				}, 10);
-			});
-		})
-		;
+	var timerWinResize;
 
-	});
+	$(window)
+		.load(function(){
+			$('paper-tabs')
+				.bind('iron-select', function(e){
+					// console.log('selected!');
+					// console.log(e);
+					var $selected = $(this).find('paper-tab.iron-selected');
+					// console.log($selected.attr('data-tab-name'));
+					$('[data-tab-content]').hide(0, function(){
+						setTimeout(function(){
+							$('[data-tab-content='+$selected.attr('data-tab-name')+']').show(0);
+						}, 10);
+					});
+				})
+			;
+
+		})
+		.resize(function(){
+			clearTimeout(timerWinResize);
+			timerWinResize = setTimeout(function(){
+				main.today.redraw();
+			}, 500);
+		})
+	;
 
 	(function () {
 		// menubar セットアップ

@@ -31,12 +31,16 @@ module.exports = function(main, callback){
 	 * すべてのアカウントを同期する
 	 */
 	this.syncAll = function(callback){
+		console.log('syncAll() start.');
 		this.reloadAccounts(function(){
 			it79.ary(
 				accounts,
 				function(it1, account, idx){
+					var accountName = account.accountInfo.id + ' - ' + account.accountInfo.account + ' - ' + account.accountInfo.service
+					console.log(accountName + ': start.');
 					account.sync(function(){
 						// console.log(account.apiAgent.accesskey);
+						console.log('completed.');
 						it1.next();
 					});
 				},
@@ -51,6 +55,7 @@ module.exports = function(main, callback){
 	 * アカウント情報を再読み込みする
 	 */
 	this.reloadAccounts = function(callback){
+		accounts = {};
 		main.dbh.getAccountList(function(accountList){
 			// console.log(accountList.rows);
 			for(var idx in accountList.rows){

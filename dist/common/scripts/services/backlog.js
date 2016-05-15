@@ -39,6 +39,7 @@ module.exports = function(main, accountMgr){
 							main.dbh.updateRecord(
 								_this.accountInfo.id, // account_id
 								_this.accountInfo.id+':'+_this.accountInfo.service+':projectId='+row.projectId+':issueKey='+row.issueKey, // remote_id
+								_this.accountInfo.service,
 								'https://'+_this.accountInfo.authinfo.space+'.backlog.jp/view/'+row.issueKey, // url
 								row.summary, // label
 								(row.status.id==4 ? 0 : 1), // status

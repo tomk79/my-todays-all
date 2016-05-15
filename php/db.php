@@ -50,6 +50,7 @@ switch( $query->method ){
 				service STRING,
 				account STRING,
 				authinfo TEXT,
+				active_flg INTEGER,
 				createdAt DATETIME,
 				updatedAt DATETIME
 			);<?php
@@ -59,6 +60,7 @@ switch( $query->method ){
 			CREATE TABLE IF NOT EXISTS records (
 				remote_id STRING PRIMARY KEY,
 				account_id INTEGER,
+				service STRING,
 				label TEXT,
 				description TEXT,
 				uri TEXT,
@@ -68,6 +70,7 @@ switch( $query->method ){
 				posted_user_name STRING,
 				status_name STRING,
 				status INTEGER,
+				additional_info TEXT,
 				start_datetime DATETIME,
 				end_datetime DATETIME,
 				createdAt DATETIME,
@@ -78,6 +81,13 @@ switch( $query->method ){
 
 	case "getAccountList":
 		$result = ORM::for_table('accounts')
+			->find_array();
+		$rtn['data'] = $result;
+		break;
+
+	case "getActiveAccountList":
+		$result = ORM::for_table('accounts')
+			->where_equal('active_flg', 1)
 			->find_array();
 		$rtn['data'] = $result;
 		break;
@@ -94,6 +104,7 @@ switch( $query->method ){
 		$new = ORM::for_table('accounts')->create();
 		$new->service = $query->service;
 		$new->account = $query->account;
+		$new->active_flg = 1;
 		$new->authinfo = base64_encode(json_encode($query->authinfo));
 		$new->createdAt = @date('c', time());
 		$new->updatedAt = @date('c', time());
@@ -107,6 +118,7 @@ switch( $query->method ){
 			'service' => $query->service,
 			'account' => $query->account,
 			'authinfo' => base64_encode(json_encode($query->authinfo)),
+			'active_flg' => $query->active_flg,
 			'updatedAt' => @date('c', time())
 		));
 		$row->save();
@@ -123,6 +135,7 @@ switch( $query->method ){
 	case "getRecordList":
 		$result = ORM::for_table('records')
 			->where('status', 1)
+			->where_in('account_id', $query->account_id_list)
 			->order_by_asc('end_datetime')
 			->find_array();
 		$rtn['data'] = $result;
@@ -131,14 +144,15 @@ switch( $query->method ){
 	case "updateRecord":
 		$found = ORM::for_table('records')
 			->where_equal(array(
-				'account_id' => $query->account_id,
 				'remote_id' => $query->remote_id,
+				'account_id' => $query->account_id,
 				'uri' => $query->uri
 			))
 			->find_many();
 		$data = array(
-			'account_id' => $query->account_id,
 			'remote_id' => $query->remote_id,
+			'account_id' => $query->account_id,
+			'service' => $query->service,
 			'uri' => $query->uri,
 			'label' => $query->label,
 			'status' => $query->status,
@@ -147,6 +161,7 @@ switch( $query->method ){
 			'category_name' => $query->category_name,
 			'assigned_user_name' => $query->assigned_user_name,
 			'posted_user_name' => $query->posted_user_name,
+			'additional_info' => $query->additional_info,
 			'start_datetime' => $query->start_datetime,
 			'end_datetime' => $query->end_datetime,
 			'updatedAt' => @date('c', time())

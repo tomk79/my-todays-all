@@ -121,8 +121,10 @@ paper-dialog paper-item > span.data-account-id{
 // ガントチャートビュー
 [data-tab-content=ganttchart]{
 	.ganttchart__outline{
+		overflow: auto;
 		margin: 10px auto;
 		width: 96%;
+		height: 200px;
 	}
 	.listview{
 		overflow: auto;

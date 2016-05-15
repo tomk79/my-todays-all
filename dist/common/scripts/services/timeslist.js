@@ -53,6 +53,7 @@ module.exports = function(main, accountMgr){
 							main.dbh.updateRecord(
 								_this.accountInfo.id, // account_id
 								_this.accountInfo.id+':'+_this.accountInfo.service+':project_no='+row.project_no+':fact_no='+row.fact_no, // remote_id
+								_this.accountInfo.service,
 								'https://timeslist.com/WTL0200/input/a/'+row.fact_post_user_no+'/p/'+row.project_id+'/f/'+row.fact_no+'/disp/bs/', // url
 								row.fact_title, // label
 								(row.fact_type_status_no==20 ? 0 : 1), // status

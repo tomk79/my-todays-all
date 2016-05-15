@@ -38,24 +38,30 @@ module.exports = function(main){
 		console.log('today.redraw() start;');
 
 		$btnRefresh.attr({'icon':'autorenew'});
-		$todaysListView.find('.listview').html('');
-		// $calendarView.html('');
-		$ganttChartView.find('.listview').html('');
+		$todaysListView.hide();
+		$ganttChartView.hide();
 
 		main.dbh.getAccountList(function(result){
+			var activeAccountList = [];
 			accountList = {};
 			for(var idx in result.rows){
 				accountList[result.rows[idx].id] = result.rows[idx];
+
+				if( Number(result.rows[idx].active_flg) ){
+					activeAccountList.push(result.rows[idx].id);
+				}
 			}
 			// console.log(accountList);
+			// console.log(activeAccountList);
 
-			main.dbh.getRecordList(function(result){
+			main.dbh.getRecordList(activeAccountList, function(result){
 				records = result;
+				// console.log(records);
 
 				redrawToday(function(){
 					redrawGanttChart(function(){
 						$btnRefresh.attr({'icon':'refresh'});
-						console.log('standby!!');
+						console.info('All Standby!!');
 						callback();
 					});
 				});
@@ -119,7 +125,7 @@ module.exports = function(main){
 				);
 				var endTime = new Date(row.end_datetime);
 				$item.append( $('<div>').text('期限: ' + ( row.end_datetime ? endTime.getFullYear() + '/' + (endTime.getMonth()+1) + '/' + endTime.getDate() : '---' ) ) );
-				$item.append( $('<div>').append( $('<span class="service">').addClass('service__'+accountList[row.account_id].service).text(accountList[row.account_id].service+'#'+row.account_id) ) );
+				$item.append( $('<div>').append( $('<span class="service">').addClass('service__'+accountList[row.account_id].service).text(accountList[row.account_id].service+' (#'+row.account_id+')') ) );
 
 				if( !row.end_datetime ){
 					$ul['unlimited'].append($item);
@@ -151,10 +157,8 @@ module.exports = function(main){
 						$todaysListView.find('.list__listview-'+idx).show();
 					}
 				}
-				$('.list__outline').show();
 
-
-				// $calendarView.html($todaysListView.find('.list__listview-today .listview').html()); // TODO: 暫定
+				$todaysListView.show();
 				console.info('Today Standby!!');
 				callback();
 			}
@@ -170,6 +174,9 @@ module.exports = function(main){
 		var minEndTime = (new Date()).getTime();
 		var maxEndTime = (new Date()).getTime();
 
+		$ganttChartView.css({
+			'height': $(window).innerHeight() - $('#paper-toolbar').outerHeight() - $('paper-tabs').outerHeight() - 90
+		});
 		for(var idx in records.rows){
 			if(!records.rows[idx].end_datetime){continue;}
 			var endTime = new Date(records.rows[idx].end_datetime).getTime();
@@ -244,8 +251,7 @@ module.exports = function(main){
 				it1.next();
 			},
 			function(){
-				$('.ganttchart__outline').show();
-
+				$ganttChartView.show();
 				console.info('GanttChart Standby!!');
 				callback();
 

@@ -10,6 +10,7 @@ module.exports = function(main){
 	});
 	elmSettings.addEventListener('iron-overlay-closed', function(){
 		// console.log('settings closed.');
+		main.today.redraw();
 	});
 	elmSettings.addEventListener('iron-overlay-canceled', function(){
 		// console.log('settings canceled.');
@@ -71,15 +72,16 @@ module.exports = function(main){
 		var account = elmEditAccount.querySelector('paper-input[name=account]').value;
 		var password = elmEditAccount.querySelector('paper-input[name=password]').value;
 		var space = elmEditAccount.querySelector('paper-input[name=space]').value;
+		var active_flg = (elmEditAccount.querySelector('paper-checkbox[name=active_flg]').checked ? 1 : 0);
 		var accountId = elmEditAccount.querySelector('input[name=account-id]').value;
 		// console.log(service, account, password);
 		if(accountId){
-			main.dbh.updateAccount(accountId, service, account, {"password": password, "space": space}, function(hdl){
+			main.dbh.updateAccount(accountId, service, account, {"password": password, "space": space}, active_flg, function(hdl){
 				// console.log(hdl);
 				_this.open();
 			});
 		}else{
-			main.dbh.addAccount(service, account, {"password": password, "space": space}, function(hdl){
+			main.dbh.addAccount(service, account, {"password": password, "space": space}, active_flg, function(hdl){
 				// console.log(hdl);
 				_this.open();
 			});
@@ -99,6 +101,7 @@ module.exports = function(main){
 		elmEditAccount.querySelector('paper-input[name=account]').value = '';
 		elmEditAccount.querySelector('paper-input[name=password]').value = '';
 		elmEditAccount.querySelector('paper-input[name=space]').value = '';
+		elmEditAccount.querySelector('paper-checkbox[name=active_flg]').checked = true;
 
 		if(accountId){
 			elmEditAccount.querySelector('h1').innerHTML = 'Edit Account';
@@ -115,6 +118,7 @@ module.exports = function(main){
 				elmEditAccount.querySelector('paper-input[name=account]').value = account.account;
 				elmEditAccount.querySelector('paper-input[name=password]').value = account.authinfo.password;
 				elmEditAccount.querySelector('paper-input[name=space]').value = account.authinfo.space;
+				elmEditAccount.querySelector('paper-checkbox[name=active_flg]').checked = (Number(account.active_flg) ? true : false);
 				elmEditAccount.open();
 			});
 		}else{

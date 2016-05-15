@@ -100,8 +100,10 @@ paper-dialog paper-item > span.data-account-id {
       clear: both; }
 
 [data-tab-content=ganttchart] .ganttchart__outline {
+  overflow: auto;
   margin: 10px auto;
-  width: 96%; }
+  width: 96%;
+  height: 200px; }
 
 [data-tab-content=ganttchart] .listview {
   overflow: auto; }

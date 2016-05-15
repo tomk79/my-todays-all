@@ -56,7 +56,7 @@ module.exports = function( main, callback ){
 	/**
 	 * アカウント情報を追加する
 	 */
-	this.addAccount = function(service, account, authinfo, callback){
+	this.addAccount = function(service, account, authinfo, active_flg, callback){
 		callback = callback || function(){};
 
 		// console.log(service, account, authinfo);
@@ -64,7 +64,8 @@ module.exports = function( main, callback ){
 			'method':'addAccount',
 			'service': service,
 			'account': account,
-			'authinfo': authinfo
+			'authinfo': authinfo,
+			'active_flg': active_flg
 		}, function(rows, err, message){
 			callback(rows);
 		});
@@ -75,7 +76,7 @@ module.exports = function( main, callback ){
 	/**
 	 * アカウント情報を更新する
 	 */
-	this.updateAccount = function(accountId, service, account, authinfo, callback){
+	this.updateAccount = function(accountId, service, account, authinfo, active_flg, callback){
 		callback = callback || function(){};
 
 		this.query({
@@ -83,7 +84,8 @@ module.exports = function( main, callback ){
 			'account_id': accountId,
 			'service': service,
 			'account': account,
-			'authinfo': authinfo
+			'authinfo': authinfo,
+			'active_flg': active_flg
 		}, function(rows, err, message){
 			callback(rows);
 		});
@@ -95,8 +97,9 @@ module.exports = function( main, callback ){
 	 * アカウント情報の一覧を取得する
 	 */
 	this.getAccountList = function(callback){
-		console.log('main.dbh.getAccountList() start;');
+		// console.log('main.dbh.getAccountList() start;');
 		this.query({'method':'getAccountList'}, function(rows, err, message){
+			// console.log(rows);
 			rows = JSON.parse(JSON.stringify(rows));
 			var rtn = {
 				'count': rows.length,
@@ -132,12 +135,12 @@ module.exports = function( main, callback ){
 	 * アカウント情報を得る
 	 */
 	this.getAccount = function(accountId, callback){
-		console.log('get account: '+accountId);
+		// console.log('get account: '+accountId);
 		this.query({
 			'method':'getAccount',
 			'account_id': accountId
 		}, function(result, err, message){
-			console.log(result);
+			// console.log(result);
 			callback(result);
 		});
 		return;
@@ -147,12 +150,13 @@ module.exports = function( main, callback ){
 	/**
 	 * レコードを更新する
 	 */
-	this.updateRecord = function( accountId, remote_id, uri, label, status, recordInfo, callback ){
+	this.updateRecord = function( accountId, remote_id, service, uri, label, status, recordInfo, callback ){
 		// console.log(accountId);
 		// callback();return;
 		this.query({
 			'method':'updateRecord',
 			'account_id': accountId,
+			'service': service,
 			'remote_id': remote_id,
 			'uri': uri,
 			'label': label,
@@ -162,6 +166,7 @@ module.exports = function( main, callback ){
 			'category_name': recordInfo.category_name,
 			'assigned_user_name': recordInfo.assigned_user_name,
 			'posted_user_name': recordInfo.posted_user_name,
+			'additional_info': recordInfo.additional_info,
 			'start_datetime': recordInfo.start_datetime,
 			'end_datetime': recordInfo.end_datetime
 		}, function(result, err, message){
@@ -189,9 +194,13 @@ module.exports = function( main, callback ){
 	/**
 	 * レコード一覧を取得する
 	 */
-	this.getRecordList = function( callback ){
-		console.log('main.dbh.getRecordList() start;');
-		this.query({'method':'getRecordList'}, function(rows, err, message){
+	this.getRecordList = function( account_id_list, callback ){
+		// console.log('main.dbh.getRecordList() start;');
+		// console.log(account_id_list);
+		this.query({
+			'method':'getRecordList',
+			'account_id_list': account_id_list
+		}, function(rows, err, message){
 			rows = JSON.parse(JSON.stringify(rows));
 			var rtn = {
 				'count': rows.length,
