@@ -65,7 +65,7 @@
 				<div class="paper-header">
 					<paper-tabs class="bottom fit" selected="0">
 						<paper-tab data-tab-name="list">Today</paper-tab>
-						<paper-tab data-tab-name="calendar">Calendar</paper-tab>
+						<!-- <paper-tab data-tab-name="calendar">Calendar</paper-tab> -->
 						<paper-tab data-tab-name="ganttchart">Gantt chart</paper-tab>
 					</paper-tabs>
 				</div>
@@ -110,14 +110,14 @@
 						</paper-card>
 					</div>
 				</div>
-				<div data-tab-content="calendar" style="display:none;">
+				<!-- <div data-tab-content="calendar" style="display:none;">
 					<h2>Calendar</h2>
 					<div class="listview"></div>
-				</div>
+				</div> -->
 				<div data-tab-content="ganttchart" style="display:none;">
-					<h2>Gantt chart</h2>
-					<div class="listview"></div>
-
+					<div class="ganttchart__outline" style="display:none;">
+						<div class="listview"></div>
+					</div>
 				</div>
 			</paper-header-panel>
 

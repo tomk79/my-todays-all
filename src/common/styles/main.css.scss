@@ -35,6 +35,8 @@ paper-dialog h1{
 paper-dialog paper-item > span.data-account-id{
 	display: none;
 }
+
+// Todayビュー
 [data-tab-content=list]{
 	.list__outline{
 		width:90%;
@@ -87,8 +89,9 @@ paper-dialog paper-item > span.data-account-id{
 		}
 	}
 }
-[data-tab-content=calendar],
-[data-tab-content=ganttchart]{
+
+// カレンダービュー
+[data-tab-content=calendar]{
 	.listview{
 		overflow: auto;
 		paper-item{
@@ -114,6 +117,58 @@ paper-dialog paper-item > span.data-account-id{
 		}
 	}
 }
+
+// ガントチャートビュー
+[data-tab-content=ganttchart]{
+	.ganttchart__outline{
+		margin: 10px auto;
+		width: 96%;
+	}
+	.listview{
+		overflow: auto;
+		table{
+			border: none;
+			border-collapse: collapse;
+			table-layout: fixed;
+			text-align: left;
+
+			th,
+			td {
+				font-size: 11px;
+				border: 1px solid #999999;
+				background: #ffffff;
+				padding: 10px;
+			}
+
+			th {
+				background: #e7e7e7;
+				div{
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+			}
+
+			thead th,
+			tfoot th {
+				background: #d9d9d9;
+				text-align: center;
+			}
+			thead td,
+			tfoot td {
+				background: #eeeeee;
+			}
+
+			tr > *:first-child{
+				width:400px;
+			}
+			.gantt__toady{
+				background: #fff6f6;
+			}
+		}
+	}
+}
+
 .status{
 	font-size: 78%;
 	padding:0.2em 1em;

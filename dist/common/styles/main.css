@@ -79,17 +79,14 @@ paper-dialog paper-item > span.data-account-id {
       display: block;
       clear: both; }
 
-[data-tab-content=calendar] .listview,
-[data-tab-content=ganttchart] .listview {
+[data-tab-content=calendar] .listview {
   overflow: auto; }
-  [data-tab-content=calendar] .listview paper-item,
-  [data-tab-content=ganttchart] .listview paper-item {
+  [data-tab-content=calendar] .listview paper-item {
     display: block;
     margin: 0;
     padding: 10px 20px;
     font-size: 14px; }
-    [data-tab-content=calendar] .listview paper-item h3,
-    [data-tab-content=ganttchart] .listview paper-item h3 {
+    [data-tab-content=calendar] .listview paper-item h3 {
       display: block;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -98,10 +95,44 @@ paper-dialog paper-item > span.data-account-id {
       font-weight: bold;
       clear: both;
       float: none; }
-    [data-tab-content=calendar] .listview paper-item div,
-    [data-tab-content=ganttchart] .listview paper-item div {
+    [data-tab-content=calendar] .listview paper-item div {
       display: block;
       clear: both; }
+
+[data-tab-content=ganttchart] .ganttchart__outline {
+  margin: 10px auto;
+  width: 96%; }
+
+[data-tab-content=ganttchart] .listview {
+  overflow: auto; }
+  [data-tab-content=ganttchart] .listview table {
+    border: none;
+    border-collapse: collapse;
+    table-layout: fixed;
+    text-align: left; }
+    [data-tab-content=ganttchart] .listview table th,
+    [data-tab-content=ganttchart] .listview table td {
+      font-size: 11px;
+      border: 1px solid #999999;
+      background: #ffffff;
+      padding: 10px; }
+    [data-tab-content=ganttchart] .listview table th {
+      background: #e7e7e7; }
+      [data-tab-content=ganttchart] .listview table th div {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap; }
+    [data-tab-content=ganttchart] .listview table thead th,
+    [data-tab-content=ganttchart] .listview table tfoot th {
+      background: #d9d9d9;
+      text-align: center; }
+    [data-tab-content=ganttchart] .listview table thead td,
+    [data-tab-content=ganttchart] .listview table tfoot td {
+      background: #eeeeee; }
+    [data-tab-content=ganttchart] .listview table tr > *:first-child {
+      width: 400px; }
+    [data-tab-content=ganttchart] .listview table .gantt__toady {
+      background: #fff6f6; }
 
 .status {
   font-size: 78%;
