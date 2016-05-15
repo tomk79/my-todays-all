@@ -38,7 +38,7 @@ module.exports = function(main, accountMgr){
 			function(res, json, status, headers){
 				// console.log(res);
 				// console.log(status);
-				if( res === false ){
+				if( res === false || res === null ){
 					callback();
 					return;
 				}
