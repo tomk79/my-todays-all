@@ -55,7 +55,7 @@ module.exports = function(main, accountMgr){
 									})(row),
 									'assigned_user_name': row.assignee.name,
 									'posted_user_name': row.createdUser.name,
-									'start_datetime': row.updated,
+									'start_datetime': row.startDate,
 									'end_datetime': row.dueDate
 								},
 								function(){

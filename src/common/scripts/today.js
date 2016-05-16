@@ -81,6 +81,14 @@ module.exports = function(main){
 	}
 
 	/**
+	 * 日付情報から、 表示できる形式の日付文字列を生成する
+	 */
+	function genDateDisplay(date){
+		date = new Date(date);
+		return date.getFullYear() + '/' + (date.getMonth()+1) + '/' + date.getDate() + ' ('+ day[date.getDay()] +')';
+	}
+
+	/**
 	 * Today タブを再描画
 	 */
 	function redrawToday(callback){
@@ -126,7 +134,7 @@ module.exports = function(main){
 					.append($('<span class="status">').text(row.status_name))
 				);
 				var endTime = new Date(row.end_datetime);
-				$item.append( $('<div>').text('期限: ' + ( row.end_datetime ? endTime.getFullYear() + '/' + (endTime.getMonth()+1) + '/' + endTime.getDate() + ' ('+ day[endTime.getDay()] +')': '---' ) ) );
+				$item.append( $('<div>').text('期限: ' + ( row.end_datetime ? genDateDisplay(endTime) : '---' ) ) );
 				$item.append( $('<div>').append( $('<span class="service">').addClass('service__'+accountList[row.account_id].service).text(accountList[row.account_id].service+' (#'+row.account_id+')') ) );
 
 				if( !row.end_datetime ){
@@ -135,13 +143,13 @@ module.exports = function(main){
 					var endTime = new Date(row.end_datetime);
 					var now = new Date();
 					var today = genDateInt(now);
-					var endDay = genDateInt(endTime);
+					var endDate = genDateInt(endTime);
 					// console.log(today);
-					// console.log(endDay);
+					// console.log(endDate);
 					// console.log($ul['today'].find('>*').size());
-					if( today == endDay ){
+					if( today == endDate ){
 						$ul['today'].append($item);
-					}else if( today > endDay ){
+					}else if( today > endDate ){
 						$ul['expiration'].append($item);
 					}else{
 						if($ul['today'].find('>*').size() < 7){
@@ -216,6 +224,7 @@ module.exports = function(main){
 		var $tableHeader = $('<table class="ganttchart__thead">');
 		var $tableTh = $('<table class="ganttchart__th">');
 		var $tableSpacer = $('<table class="ganttchart__spacer">');
+		var $chart = $('<div class="ganttchart__chart">');
 		var $thead = $('<thead>');
 		var $theadR1 = $('<tr>');
 		var $theadR2 = $('<tr>');
@@ -270,6 +279,7 @@ module.exports = function(main){
 
 		$ganttChartView.find('.listview')
 			.append( $table )
+			.append( $chart )
 			.append( $tableHeader )
 			.append( $tableTh )
 			.append( $tableSpacer )
@@ -291,6 +301,51 @@ module.exports = function(main){
 						.append( $('<div style="width: 180px;">').text(row.label) )
 					)
 				);
+
+				if( !row.end_datetime ){
+					var $chartBar = $('<div>');
+					$chartBar
+						.addClass('ganttchart__chart_bar')
+						.addClass('ganttchart__chart_bar--unlimited')
+						.text('期限未設定')
+						.css({
+							'top': (idx*40) + 135,
+							'left': 180 + 10
+						})
+					;
+					$chart.append( $chartBar );
+					it1.next();
+					return;
+				}
+
+				var now = new Date(),
+					today = genDateInt(now);
+				var endTime = null, endDate = null;
+				if( row.end_datetime ){
+					endTime = new Date(row.end_datetime);
+					endDate = genDateInt(endTime);
+				}
+				var startTime = endTime, startDate = endDate;
+				if( row.start_datetime ){
+					startTime = new Date(row.start_datetime);
+					startDate = genDateInt(startTime);
+				}
+
+				var barWidth = Math.floor(((endTime.getTime() - startTime.getTime()) /24/60/60/1000) + 1) * (30+9) -1;
+				var barLeft = Math.floor(((startTime.getTime() - minEndTime) /24/60/60/1000) + 1) * (30+9);
+
+				var $chartBar = $('<div>');
+				$chartBar
+					.addClass('ganttchart__chart_bar')
+					.css({
+						'top': (idx*40) + 135,
+						'left': 180 + 10 + barLeft,
+						'width': barWidth
+					})
+					.text( genDateDisplay(startTime) + ' - ' + genDateDisplay(endTime) )
+				;
+				$chart.append( $chartBar );
+
 				it1.next();
 			},
 			function(){

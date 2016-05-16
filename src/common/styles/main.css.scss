@@ -164,7 +164,7 @@ paper-dialog paper-item > span.data-account-id{
 
 			tbody{
 				th,td{
-					height:50px;
+					height:40px;
 				}
 			}
 
@@ -177,13 +177,32 @@ paper-dialog paper-item > span.data-account-id{
 		}
 		table.ganttchart__spacer,
 		table.ganttchart__thead,
-		table.ganttchart__th{
+		table.ganttchart__th,
+		div.ganttchart__chart{
 			position: absolute;
 			top:0;
 			left:0;
 		}
 		table thead tr th[rowspan="4"] div{
 			height: 120px;
+		}
+		div.ganttchart__chart{
+			.ganttchart__chart_bar{
+				position: absolute;
+				top: 0; left: 0;
+				background-color: #8b6;
+				padding: 3px 10px 0 10px;
+				height: 30px;
+				min-width: 15px;
+				white-space: nowrap;
+				text-align: right;
+				opacity: 0.9;
+			}
+			.ganttchart__chart_bar--unlimited{
+				background-color: #fff;
+				min-width: auto;
+				text-align: left;
+			}
 		}
 	}
 }

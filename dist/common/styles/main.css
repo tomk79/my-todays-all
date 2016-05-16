@@ -132,19 +132,35 @@ paper-dialog paper-item > span.data-account-id {
     [data-tab-content=ganttchart] .listview table tfoot td {
       background: #eeeeee; }
     [data-tab-content=ganttchart] .listview table tbody th, [data-tab-content=ganttchart] .listview table tbody td {
-      height: 50px; }
+      height: 40px; }
     [data-tab-content=ganttchart] .listview table .gantt__toady {
       background: #fff6f6; }
     [data-tab-content=ganttchart] .listview table .gantt__header-by-date {
       width: 30px; }
   [data-tab-content=ganttchart] .listview table.ganttchart__spacer,
   [data-tab-content=ganttchart] .listview table.ganttchart__thead,
-  [data-tab-content=ganttchart] .listview table.ganttchart__th {
+  [data-tab-content=ganttchart] .listview table.ganttchart__th,
+  [data-tab-content=ganttchart] .listview div.ganttchart__chart {
     position: absolute;
     top: 0;
     left: 0; }
   [data-tab-content=ganttchart] .listview table thead tr th[rowspan="4"] div {
     height: 120px; }
+  [data-tab-content=ganttchart] .listview div.ganttchart__chart .ganttchart__chart_bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #8b6;
+    padding: 3px 10px 0 10px;
+    height: 30px;
+    min-width: 15px;
+    white-space: nowrap;
+    text-align: right;
+    opacity: 0.9; }
+  [data-tab-content=ganttchart] .listview div.ganttchart__chart .ganttchart__chart_bar--unlimited {
+    background-color: #fff;
+    min-width: auto;
+    text-align: left; }
 
 .status {
   font-size: 78%;
