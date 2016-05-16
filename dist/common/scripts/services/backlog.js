@@ -90,6 +90,7 @@ module.exports = function(main, accountMgr){
 			'url': 'https://'+authInfo.space+'.backlog.jp/api/v2'+api,
 			'data': data,
 			'type': type,
+			'scriptCharset': 'UTF-8',
 			'dataType': 'json',
 			'success': function(data){
 				// console.log(data);

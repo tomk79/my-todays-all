@@ -26,8 +26,8 @@ module.exports = function( main, callback ){
 		arg.push( unpackedPath('php/db.php') );
 		arg.push('--db');
 		arg.push( dbPath );
-		// arg.push(utils79.base64_encode(JSON.stringify(query)));
-		arg.push(JSON.stringify(query));
+		arg.push(utils79.base64_encode(JSON.stringify(query)));
+		// arg.push(JSON.stringify(query));
 		// console.log(arg);
 
 		// PHPスクリプトを実行する
@@ -151,9 +151,7 @@ module.exports = function( main, callback ){
 	 * レコードを更新する
 	 */
 	this.updateRecord = function( accountId, remote_id, service, uri, label, status, recordInfo, callback ){
-		// console.log(accountId);
-		// callback();return;
-		this.query({
+		var queryData = {
 			'method':'updateRecord',
 			'account_id': accountId,
 			'service': service,
@@ -169,7 +167,9 @@ module.exports = function( main, callback ){
 			'additional_info': recordInfo.additional_info,
 			'start_datetime': recordInfo.start_datetime,
 			'end_datetime': recordInfo.end_datetime
-		}, function(result, err, message){
+		};
+		// console.log(queryData);
+		this.query(queryData, function(result, err, message){
 			callback(result);
 		});
 

@@ -44,7 +44,7 @@ if( @is_null($conf['path_db']) ){
 ORM::configure('sqlite:'.$conf['path_db']);
 
 // var_dump($query);
-// $query = base64_decode( $query );
+$query = base64_decode( $query );
 $query = json_decode( $query );
 // var_dump($query);
 
