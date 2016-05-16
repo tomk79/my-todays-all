@@ -1,6 +1,6 @@
 {
   "name": "Today",
-  "version": "0.1.0-alpha.1+nb",
+  "version": "0.1.0-alpha.1",
   "description": "Listing your todays all issues.",
   "private": true,
   "main": "main.js",
