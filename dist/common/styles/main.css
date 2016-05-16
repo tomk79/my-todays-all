@@ -101,12 +101,12 @@ paper-dialog paper-item > span.data-account-id {
 
 [data-tab-content=ganttchart] .ganttchart__outline {
   overflow: auto;
-  margin: 10px auto;
-  width: 96%;
-  height: 200px; }
+  margin: 10px auto 0 auto; }
 
 [data-tab-content=ganttchart] .listview {
-  overflow: auto; }
+  overflow: auto;
+  height: 200px;
+  position: relative; }
   [data-tab-content=ganttchart] .listview table {
     border: none;
     border-collapse: collapse;
@@ -117,7 +117,7 @@ paper-dialog paper-item > span.data-account-id {
       font-size: 11px;
       border: 1px solid #999999;
       background: #ffffff;
-      padding: 10px; }
+      padding: 4px; }
     [data-tab-content=ganttchart] .listview table th {
       background: #e7e7e7; }
       [data-tab-content=ganttchart] .listview table th div {
@@ -131,10 +131,20 @@ paper-dialog paper-item > span.data-account-id {
     [data-tab-content=ganttchart] .listview table thead td,
     [data-tab-content=ganttchart] .listview table tfoot td {
       background: #eeeeee; }
-    [data-tab-content=ganttchart] .listview table tr > *:first-child {
-      width: 400px; }
+    [data-tab-content=ganttchart] .listview table tbody th, [data-tab-content=ganttchart] .listview table tbody td {
+      height: 50px; }
     [data-tab-content=ganttchart] .listview table .gantt__toady {
       background: #fff6f6; }
+    [data-tab-content=ganttchart] .listview table .gantt__header-by-date {
+      width: 30px; }
+  [data-tab-content=ganttchart] .listview table.ganttchart__spacer,
+  [data-tab-content=ganttchart] .listview table.ganttchart__thead,
+  [data-tab-content=ganttchart] .listview table.ganttchart__th {
+    position: absolute;
+    top: 0;
+    left: 0; }
+  [data-tab-content=ganttchart] .listview table thead tr th[rowspan="4"] div {
+    height: 120px; }
 
 .status {
   font-size: 78%;

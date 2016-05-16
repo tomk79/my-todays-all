@@ -122,12 +122,13 @@ paper-dialog paper-item > span.data-account-id{
 [data-tab-content=ganttchart]{
 	.ganttchart__outline{
 		overflow: auto;
-		margin: 10px auto;
-		width: 96%;
-		height: 200px;
+		margin: 10px auto 0 auto;
 	}
 	.listview{
 		overflow: auto;
+		height: 200px;
+		position:relative;
+
 		table{
 			border: none;
 			border-collapse: collapse;
@@ -139,7 +140,7 @@ paper-dialog paper-item > span.data-account-id{
 				font-size: 11px;
 				border: 1px solid #999999;
 				background: #ffffff;
-				padding: 10px;
+				padding: 4px;
 			}
 
 			th {
@@ -161,12 +162,28 @@ paper-dialog paper-item > span.data-account-id{
 				background: #eeeeee;
 			}
 
-			tr > *:first-child{
-				width:400px;
+			tbody{
+				th,td{
+					height:50px;
+				}
 			}
+
 			.gantt__toady{
 				background: #fff6f6;
 			}
+			.gantt__header-by-date{
+				width: 30px;
+			}
+		}
+		table.ganttchart__spacer,
+		table.ganttchart__thead,
+		table.ganttchart__th{
+			position: absolute;
+			top:0;
+			left:0;
+		}
+		table thead tr th[rowspan="4"] div{
+			height: 120px;
 		}
 	}
 }

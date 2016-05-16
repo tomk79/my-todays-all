@@ -13,6 +13,8 @@ module.exports = function(main){
 	var $btnRefresh = $('paper-icon-button.btn-refresh');
 	var accountList = {};
 
+	var day = ['日','月','火','水','木','金','土']
+
 	/**
 	 * APIから情報を取得しなおして再描画する
 	 */
@@ -124,7 +126,7 @@ module.exports = function(main){
 					.append($('<span class="status">').text(row.status_name))
 				);
 				var endTime = new Date(row.end_datetime);
-				$item.append( $('<div>').text('期限: ' + ( row.end_datetime ? endTime.getFullYear() + '/' + (endTime.getMonth()+1) + '/' + endTime.getDate() : '---' ) ) );
+				$item.append( $('<div>').text('期限: ' + ( row.end_datetime ? endTime.getFullYear() + '/' + (endTime.getMonth()+1) + '/' + endTime.getDate() + ' ('+ day[endTime.getDay()] +')': '---' ) ) );
 				$item.append( $('<div>').append( $('<span class="service">').addClass('service__'+accountList[row.account_id].service).text(accountList[row.account_id].service+' (#'+row.account_id+')') ) );
 
 				if( !row.end_datetime ){
@@ -174,8 +176,23 @@ module.exports = function(main){
 		var minEndTime = (new Date()).getTime();
 		var maxEndTime = (new Date()).getTime();
 
-		$ganttChartView.css({
-			'height': $(window).innerHeight() - $('#paper-toolbar').outerHeight() - $('paper-tabs').outerHeight() - 90
+		$ganttChartView.find('.listview').css({
+			'height': $(window).innerHeight() - $('#paper-toolbar').outerHeight() - $('paper-tabs').outerHeight() - 80
+		});
+		$ganttChartView.find('.listview').scroll(function(e){
+			var $this = $(this);
+			var sTop = $this.scrollTop();
+			var sLeft = $this.scrollLeft();
+			$this.find('table.ganttchart__thead').css({
+				'top': sTop
+			});
+			$this.find('table.ganttchart__th').css({
+				'left': sLeft
+			});
+			$this.find('table.ganttchart__spacer').css({
+				'top': sTop,
+				'left': sLeft
+			});
 		});
 		for(var idx in records.rows){
 			if(!records.rows[idx].end_datetime){continue;}
@@ -195,13 +212,20 @@ module.exports = function(main){
 
 		$ganttChartView.find('.listview').html( '' );
 
-		var $table = $('<table>');
+		var $table = $('<table class="ganttchart__main">');
+		var $tableHeader = $('<table class="ganttchart__thead">');
+		var $tableTh = $('<table class="ganttchart__th">');
+		var $tableSpacer = $('<table class="ganttchart__spacer">');
 		var $thead = $('<thead>');
 		var $theadR1 = $('<tr>');
 		var $theadR2 = $('<tr>');
 		var $theadR3 = $('<tr>');
+		var $theadR4 = $('<tr>');
 		var $tbody = $('<tbody>');
-		$theadR1.append('<th rowspan="3">');
+		$theadR1.append('<th rowspan="4"><div style="width: 180px;">');
+		$tableHeader.append('<thead>');
+		$tableTh.append('<thead><th rowspan="4"><div style="width: 180px;">').append('<tbody>');
+		$tableSpacer.append('<thead><th rowspan="4"><div style="width: 180px;">');
 		var datePointer = minEndTime;
 		var daysCounter = 0;
 		var commonTd = '';
@@ -217,17 +241,21 @@ module.exports = function(main){
 			daysCounter ++;
 
 			var isToday = (pointerDate==toDay ? true : false);
+			var cssClass = (isToday ? ' class="gantt__toady"' : '');
 
-			$theadR1.append( $('<th'+(isToday ? ' class="gantt__toady"' : '')+' style="width: 15px;">')
-				.text( new Date(datePointer).getFullYear() )
+			$theadR1.append( $('<th'+cssClass+'>')
+				.append( $('<div class="gantt__header-by-date">').text( new Date(datePointer).getFullYear() ) )
 			);
-			$theadR2.append( $('<th'+(isToday ? ' class="gantt__toady"' : '')+' style="width: 15px;">')
-				.text( new Date(datePointer).getMonth()+1 )
+			$theadR2.append( $('<th'+cssClass+'>')
+				.append( $('<div class="gantt__header-by-date">').text( new Date(datePointer).getMonth()+1 ) )
 			);
-			$theadR3.append( $('<th'+(isToday ? ' class="gantt__toady"' : '')+' style="width: 15px;">')
-				.text( new Date(datePointer).getDate() )
+			$theadR3.append( $('<th'+cssClass+'>')
+				.append( $('<div class="gantt__header-by-date">').text( new Date(datePointer).getDate() ) )
 			);
-			commonTd += '<td'+(isToday ? ' class="gantt__toady"' : '')+' style="width: 15px;"></td>';
+			$theadR4.append( $('<th'+cssClass+'>')
+				.append( $('<div class="gantt__header-by-date">').text( day[new Date(datePointer).getDay()] ) )
+			);
+			commonTd += '<td'+cssClass+'></td>';
 			datePointer = datePointer + (24*60*60*1000);
 		}
 
@@ -235,8 +263,17 @@ module.exports = function(main){
 			.append( $theadR1 )
 			.append( $theadR2 )
 			.append( $theadR3 )
+			.append( $theadR4 )
 		).append( $tbody );
-		$ganttChartView.find('.listview').append( $table );
+
+		$tableHeader.find('thead').html( $thead.html() );
+
+		$ganttChartView.find('.listview')
+			.append( $table )
+			.append( $tableHeader )
+			.append( $tableTh )
+			.append( $tableSpacer )
+		;
 
 
 		it79.ary(
@@ -248,6 +285,12 @@ module.exports = function(main){
 				$item.append( commonTd );
 
 				$tbody.append($item);
+
+				$tableTh.find('tbody').append( $('<tr>')
+					.append( $('<th>')
+						.append( $('<div style="width: 180px;">').text(row.label) )
+					)
+				);
 				it1.next();
 			},
 			function(){
