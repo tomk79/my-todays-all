@@ -5,6 +5,7 @@ var packager = require('electron-packager');
 var config = require('./package.json');
 var zipFolder = require('zip-folder');
 var rimraf = require('rimraf');
+var Promise = require('es6-promise').Promise;
 
 function build( condition, callback ){
 	var dir = './';
@@ -28,7 +29,7 @@ function build( condition, callback ){
 		icon = './resources/app_for_Windows.ico'; //<- アプリアイコン
 	}
 
-	var version = '0.36.1';
+	var version = '1.4.0';
 	var app_bundle_id = 'jp.pxt.applications.my-todays-all'; //<- 自分のドメインなどを使用してください
 	var helper_bundle_id = 'jp.pxt.applications.my-todays-all'; //<- 自分のドメインなどを使用してください
 
@@ -101,10 +102,34 @@ function build( condition, callback ){
 	);
 }
 
-build({'platform':'darwin','arch':'x64'}, function(){
-build({'platform':'win32','arch':'x64'}, function(){
-build({'platform':'win32','arch':'ia32'}, function(){
-	console.log('ALL DONE!');
-});
-});
-});
+
+
+new Promise(function(rlv){rlv();})
+	.then(function(){ return new Promise(function(rlv, rjt){
+		console.log('--- Building for Darwin x64 ---');
+		build({'platform':'darwin','arch':'x64'}, function(){
+			console.log('done.');
+			console.log('');
+			rlv();
+		});
+	}); })
+	.then(function(){ return new Promise(function(rlv, rjt){
+		console.log('--- Building for Win32 x64 ---');
+		build({'platform':'win32','arch':'x64'}, function(){
+			console.log('done.');
+			console.log('');
+			rlv();
+		});
+	}); })
+	.then(function(){ return new Promise(function(rlv, rjt){
+		console.log('--- Building for Win32 ia32 ---');
+		build({'platform':'win32','arch':'ia32'}, function(){
+			console.log('done.');
+			console.log('');
+			rlv();
+		});
+	}); })
+	.then(function(){ return new Promise(function(rlv, rjt){
+		console.log('ALL DONE!');
+	}); })
+;
