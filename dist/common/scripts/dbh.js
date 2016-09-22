@@ -1,9 +1,11 @@
+'use strict';
+
 /**
  * dbh.js
  */
 module.exports = function( main, callback ){
 	var _this = this;
-	var remote = require('remote');
+	const {remote} = require('electron');
 	var utils79 = require('utils79');
 	var unpackedPath = remote.require('./node/unpackedPath.js');
 	var nodePhpBin = remote.require( unpackedPath('node_modules/node-php-bin/') ).get();

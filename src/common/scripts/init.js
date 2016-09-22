@@ -1,8 +1,10 @@
+'use strict';
+
 /**
  * initialize
  */
 module.exports = function( main, callback ){
-	var remote = require('remote');
+	const {remote} = require('electron');
 	var fs = remote.require('fs');
 
 	main.desktopUtils = remote.require('desktop-utils');

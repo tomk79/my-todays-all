@@ -2,25 +2,23 @@
 
 // Module to control application life.
 // アプリケーションをコントロールするモジュール
-var app = require('app');
+const electron = require('electron');
+const {app, BrowserWindow, crashReporter, Menu} = require('electron');
 
-// Module to create native browser window.
-// ウィンドウを作成するモジュール
-var BrowserWindow = require('browser-window');
-// Report crashes to our server.
-require('crash-reporter').start();
-
-
-// メインウィンドウはGCされないようにグローバル宣言
-var mainWindow;
+// crashReporter セッティング
+crashReporter.start({
+	productName: 'Today',
+	companyName: 'Tomoya Koyanagi',
+	submitURL: 'https://github.com/tomk79/my-todays-all/issues',
+	autoSubmit: false
+});
 
 // 全てのウィンドウが閉じたら終了
 app.on('window-all-closed', function() {
 	app.quit();
 });
 
-var electron = require('electron');
-var Menu = electron.Menu;
+let mainWindow;
 
 
 // This method will be called when Electron has finished
@@ -28,8 +26,9 @@ var Menu = electron.Menu;
 app.on('ready', function () {
 	// Create the browser window.
 	mainWindow = new BrowserWindow({ width: 840, height: 540 });
+
 	// and load the index.html of the app.
-	mainWindow.loadUrl('file://' + __dirname + '/dist/index.html');
+	mainWindow.loadURL('file://' + __dirname + '/dist/index.html');
 
 	// Emitted when the window is closed.
 	mainWindow.on('closed', function () {

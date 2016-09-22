@@ -1,7 +1,9 @@
+'use strict';
+
 (function(window){
 	var $ = window.$ = require('jquery');
 	var _this = this;
-	var remote = require('remote');
+	const {remote} = require('electron');
 	// var dialog = remote.require('dialog');
 	// var browserWindow = remote.require('browser-window');
 	// console.log(diffdir);

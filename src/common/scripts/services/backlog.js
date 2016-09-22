@@ -1,8 +1,10 @@
+'use strict';
+
 /**
  * backlog.js
  */
 module.exports = function(main, accountMgr){
-	var remote = require('remote');
+	const {remote} = require('electron');
 	var accounts = {};
 	var utils79 = require('utils79');
 	var it79 = require('iterate79');

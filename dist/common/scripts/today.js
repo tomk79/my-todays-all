@@ -1,9 +1,11 @@
+'use strict';
+
 /**
  * Today
  */
 module.exports = function(main){
 	var _this = this;
-	var remote = require('remote');
+	const {remote} = require('electron');
 	var it79 = require('iterate79');
 	var desktopUtils = remote.require('desktop-utils');
 
@@ -14,6 +16,7 @@ module.exports = function(main){
 	var accountList = {};
 
 	var day = ['日','月','火','水','木','金','土']
+	let records;
 
 	/**
 	 * APIから情報を取得しなおして再描画する
@@ -57,8 +60,8 @@ module.exports = function(main){
 			// console.log(activeAccountList);
 
 			main.dbh.getRecordList(activeAccountList, function(result){
+				// console.log(result);
 				records = result;
-				// console.log(records);
 
 				redrawToday(function(){
 					redrawGanttChart(function(){
@@ -94,7 +97,7 @@ module.exports = function(main){
 	function redrawToday(callback){
 		callback = callback || function(){};
 
-		$ul = {
+		var $ul = {
 			'unlimited': $('<div>'),
 			'expiration': $('<div>'),
 			'today': $('<div>'),

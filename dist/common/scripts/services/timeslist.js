@@ -1,8 +1,10 @@
+'use strict';
+
 /**
  * timeslist.js
  */
 module.exports = function(main, accountMgr){
-	var remote = require('remote');
+	const {remote} = require('electron');
 	var accounts = {};
 	var utils79 = require('utils79');
 	var it79 = require('iterate79');
@@ -33,50 +35,60 @@ module.exports = function(main, accountMgr){
 		// console.log(this.apiAgent);
 		var _this = this;
 
-		this.apiAgent.fact(
+		_this.apiAgent.authusers(
 			{},
 			function(res, json, status, headers){
 				// console.log(res);
 				// console.log(json);
 				// console.log(status);
-				if( res === false || res === null ){
-					callback();
-					return;
-				}
+				_this.apiAgent.fact(
+					{
+						'fact_user_no': res.user_no
+					},
+					function(res, json, status, headers){
+						// console.log(res);
+						// console.log(json);
+						// console.log(status);
+						if( res === false || res === null ){
+							callback();
+							return;
+						}
 
-				main.dbh.deleteRecordsOfAccount(_this.accountInfo.id, function(){
-					it79.ary(
-						res,
-						function(it1, row, idx){
-							// console.log(JSON.parse(JSON.stringify(row)));
-							// console.log(_this.accountInfo);
+						main.dbh.deleteRecordsOfAccount(_this.accountInfo.id, function(){
+							it79.ary(
+								res,
+								function(it1, row, idx){
+									// console.log(JSON.parse(JSON.stringify(row)));
+									// console.log(_this.accountInfo);
 
-							main.dbh.updateRecord(
-								_this.accountInfo.id, // account_id
-								_this.accountInfo.id+':'+_this.accountInfo.service+':project_no='+row.project_no+':fact_no='+row.fact_no, // remote_id
-								_this.accountInfo.service,
-								'https://timeslist.com/WTL0200/input/a/'+row.fact_post_user_no+'/p/'+row.project_id+'/f/'+row.fact_no+'/disp/bs/', // url
-								row.fact_title, // label
-								(row.fact_type_status_no==20 ? 0 : 1), // status
-								{
-									'category_name': row.fact_category_name,
-									'status_name': row.fact_type_status_name,
-									'phase_name': row.phase_name,
-									'assigned_user_name': row.fact_user_name,
-									'posted_user_name': row.fact_post_user_name,
-									'start_datetime': parseDate(row.fact_start_date,false),
-									'end_datetime': parseDate(row.fact_deadline,true)
+									main.dbh.updateRecord(
+										_this.accountInfo.id, // account_id
+										_this.accountInfo.id+':'+_this.accountInfo.service+':project_no='+row.project_no+':fact_no='+row.fact_no, // remote_id
+										_this.accountInfo.service,
+										'https://timeslist.com/WTL0200/input/a/'+row.fact_post_user_no+'/p/'+row.project_id+'/f/'+row.fact_no+'/disp/bs/', // url
+										row.fact_title, // label
+										(row.fact_type_status_no==20 ? 0 : 1), // status
+										{
+											'category_name': row.fact_category_name,
+											'status_name': row.fact_type_status_name,
+											'phase_name': row.phase_name,
+											'assigned_user_name': row.fact_user_name,
+											'posted_user_name': row.fact_post_user_name,
+											'start_datetime': parseDate(row.fact_start_date,false),
+											'end_datetime': parseDate(row.fact_deadline,true)
+										},
+										function(){
+											it1.next();
+										}
+									);
 								},
 								function(){
-									it1.next();
+									callback();
 								}
 							);
-						},
-						function(){
-							callback();
-						}
-					);
-				});
+						});
+					}
+				);
 			}
 		);
 		return;

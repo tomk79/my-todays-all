@@ -1,5 +1,7 @@
+'use strict';
+
 module.exports = function(main, callback){
-	var remote = require('remote');
+	const {remote} = require('electron');
 	var accounts = {};
 	var utils79 = require('utils79');
 	var it79 = require('iterate79');

@@ -24,6 +24,9 @@ var _tasks = [
 
 // client-libs (frontend) を処理
 gulp.task("client-libs", function() {
+	gulp.src(["node_modules/jquery/dist/**/*"])
+		.pipe(gulp.dest( './dist/common/libs/jquery/dist/' ))
+	;
 	gulp.src(["node_modules/bootstrap/dist/**/*"])
 		.pipe(gulp.dest( './dist/common/libs/bootstrap/dist/' ))
 	;
