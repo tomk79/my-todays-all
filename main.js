@@ -3,13 +3,13 @@
 // Module to control application life.
 // アプリケーションをコントロールするモジュール
 const electron = require('electron');
-const {app, BrowserWindow, crashReporter, Menu} = require('electron');
+const {app, BrowserWindow, crashReporter} = require('electron');
 
 // crashReporter セッティング
 crashReporter.start({
 	productName: 'Today',
 	companyName: 'Tomoya Koyanagi',
-	submitURL: 'https://github.com/tomk79/my-todays-all/issues',
+	submitURL: 'https://github.com/tomk79/my-todays-all/issues', // ← TODO: これでいいの????
 	autoSubmit: false
 });
 

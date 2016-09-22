@@ -85,7 +85,7 @@ module.exports = function( main, callback ){
 						{
 							label: 'Reload',
 							accelerator: 'Command+R',
-							click: function () { mainWindow.restart(); }
+							click: function () { mainWindow.reload(); }
 						},
 						{
 							label: 'Toggle Full Screen',
