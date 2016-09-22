@@ -47,7 +47,7 @@ module.exports = function( main, callback ){
 					callback(false, 1, 'JSON parse error');
 					return;
 				}
-				// console.log(data.data);
+				// console.log(data.data, data.error, data.message);
 				callback(data.data, data.error, data.message);
 				return;
 			}
