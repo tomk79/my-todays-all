@@ -8,7 +8,9 @@ module.exports = function( main, callback ){
 	const {remote} = require('electron');
 	var utils79 = require('utils79');
 	var unpackedPath = remote.require('./node/unpackedPath.js');
-	var nodePhpBin = remote.require( unpackedPath('node_modules/node-php-bin/') ).get();
+	var nodePhpBin = remote.require( unpackedPath('node_modules/node-php-bin/') ).get({
+		"bin": "php"
+	});
 	var fs = remote.require('fs');
 
 	try {
