@@ -42,7 +42,7 @@ module.exports = function(main, accountMgr){
 								_this.accountInfo.id, // account_id
 								_this.accountInfo.id+':'+_this.accountInfo.service+':projectId='+row.projectId+':issueKey='+row.issueKey, // remote_id
 								_this.accountInfo.service,
-								'https://'+_this.accountInfo.authinfo.space+'.backlog.jp/view/'+row.issueKey, // url
+								'https://'+_this.accountInfo.authinfo.space+'/view/'+row.issueKey, // url
 								row.summary, // label
 								(row.status.id==4 ? 0 : 1), // status
 								{
@@ -89,7 +89,7 @@ module.exports = function(main, accountMgr){
 
 		var rtn = {};
 		$.ajax({
-			'url': 'https://'+authInfo.space+'.backlog.jp/api/v2'+api,
+			'url': 'https://'+authInfo.space+'/api/v2'+api,
 			'data': data,
 			'type': type,
 			'scriptCharset': 'UTF-8',
